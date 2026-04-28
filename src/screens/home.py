@@ -11,6 +11,16 @@ from kivy.graphics import Color, Rectangle, RoundedRectangle
 
 ASSETS_DIR = Path(__file__).parent.parent / "assets"
 
+# Earthy palette — darkened for contrast
+BG = (0.96, 0.94, 0.91, 1)
+CARD = (0.99, 0.97, 0.95, 1)
+PRIMARY = (0.62, 0.32, 0.20, 1)
+SECONDARY = (0.40, 0.48, 0.32, 1)
+TEXT_DARK = (0.15, 0.13, 0.11, 1)
+TEXT_MID = (0.38, 0.34, 0.30, 1)
+TEXT_LIGHT = (0.58, 0.54, 0.48, 1)
+BTN_TEXT = (1.0, 0.98, 0.96, 1)
+
 
 class HomeScreen(Screen):
     def on_enter(self):
@@ -18,161 +28,88 @@ class HomeScreen(Screen):
         app = App.get_running_app()
         stats = app.progress.get_stats()
 
-        root = BoxLayout(orientation="vertical", padding=dp(25), spacing=dp(12))
-
-        # Background
+        root = BoxLayout(orientation="vertical", padding=dp(28), spacing=dp(14))
         with root.canvas.before:
-            Color(0.969, 0.969, 0.969, 1)
-            self._bg_rect = Rectangle(pos=root.pos, size=root.size)
-        root.bind(pos=self._update_bg, size=self._update_bg)
+            Color(*BG)
+            self._bg = Rectangle(pos=root.pos, size=root.size)
+        root.bind(pos=lambda i, *a: setattr(self._bg, "pos", i.pos),
+                  size=lambda i, *a: setattr(self._bg, "size", i.size))
 
-        # Top spacer
-        root.add_widget(BoxLayout(size_hint_y=0.05))
+        root.add_widget(BoxLayout(size_hint_y=0.06))
 
         # Logo
         logo_path = ASSETS_DIR / "logo.png"
         if logo_path.exists():
-            logo = Image(
-                source=str(logo_path),
-                size_hint=(None, None),
-                width=dp(100),
-                height=dp(100),
-                pos_hint={"center_x": 0.5},
-            )
-            root.add_widget(logo)
+            root.add_widget(Image(source=str(logo_path), size_hint=(None, None),
+                                  width=dp(80), height=dp(80), pos_hint={"center_x": 0.5}))
 
         # Title
-        title = Label(
-            text="Slovenčk",
-            font_size="34sp",
-            bold=True,
-            color=(0.345, 0.8, 0.008, 1),
-            size_hint_y=None,
-            height=dp(45),
-        )
-        root.add_widget(title)
+        root.add_widget(Label(text="Slovenčk", font_size="30sp", bold=True,
+                              color=TEXT_DARK, size_hint_y=None, height=dp(40)))
+        root.add_widget(Label(text="Learn Slovenian", font_size="14sp",
+                              color=TEXT_LIGHT, size_hint_y=None, height=dp(20)))
 
-        # Subtitle
-        subtitle = Label(
-            text="Learn Slovenian",
-            font_size="16sp",
-            color=(0.5, 0.5, 0.5, 1),
-            size_hint_y=None,
-            height=dp(25),
-        )
-        root.add_widget(subtitle)
-
-        root.add_widget(BoxLayout(size_hint_y=0.05))
+        root.add_widget(BoxLayout(size_hint_y=0.04))
 
         # Stats card
-        stats_box = BoxLayout(orientation="vertical", size_hint_y=None, height=dp(120), padding=dp(15), spacing=dp(5))
+        stats_box = BoxLayout(orientation="vertical", size_hint_y=None, height=dp(110),
+                              padding=dp(16), spacing=dp(6))
         with stats_box.canvas.before:
-            Color(0, 0, 0, 0.04)
-            self._stats_shadow = RoundedRectangle(pos=(stats_box.x + dp(1), stats_box.y - dp(2)), size=stats_box.size, radius=[dp(12)])
-            Color(1, 1, 1, 1)
-            self._stats_bg = RoundedRectangle(pos=stats_box.pos, size=stats_box.size, radius=[dp(12)])
-        stats_box.bind(pos=self._update_stats_bg, size=self._update_stats_bg)
+            Color(0, 0, 0, 0.025)
+            self._ss = RoundedRectangle(pos=stats_box.pos, size=stats_box.size, radius=[dp(8)])
+            Color(*CARD)
+            self._sb = RoundedRectangle(pos=stats_box.pos, size=stats_box.size, radius=[dp(8)])
+        stats_box.bind(
+            pos=lambda i, *a: (setattr(self._sb, "pos", i.pos), setattr(self._ss, "pos", (i.x+1, i.y-1))),
+            size=lambda i, *a: (setattr(self._sb, "size", i.size), setattr(self._ss, "size", i.size)))
 
-        stats_title = Label(
-            text="Your Progress",
-            font_size="16sp",
-            bold=True,
-            color=(0.345, 0.8, 0.008, 1),
-            size_hint_y=None,
-            height=dp(25),
-            halign="center",
-        )
-        stats_title.bind(size=stats_title.setter("text_size"))
-        stats_box.add_widget(stats_title)
+        st = Label(text="Your Progress", font_size="13sp", bold=True,
+                   color=PRIMARY, size_hint_y=None, height=dp(22), halign="center")
+        st.bind(size=st.setter("text_size"))
+        stats_box.add_widget(st)
 
-        stats_items = [
-            (f"{stats['lessons_completed']}", "Lessons"),
-            (f"{stats['words_learned']}", "Learned"),
-            (f"{stats['words_in_progress']}", "In Progress"),
-        ]
-        stats_row = BoxLayout(orientation="horizontal", spacing=dp(5))
-        for number, label_text in stats_items:
-            col = BoxLayout(orientation="vertical", spacing=dp(2))
-            num = Label(text=number, font_size="26sp", bold=True, color=(0.2, 0.2, 0.2, 1), halign="center")
-            num.bind(size=num.setter("text_size"))
-            lbl = Label(text=label_text, font_size="12sp", color=(0.5, 0.5, 0.5, 1), halign="center")
-            lbl.bind(size=lbl.setter("text_size"))
-            col.add_widget(num)
-            col.add_widget(lbl)
-            stats_row.add_widget(col)
-        stats_box.add_widget(stats_row)
-
+        row = BoxLayout(spacing=dp(5))
+        for num, lbl in [(f"{stats['lessons_completed']}", "Lessons"),
+                         (f"{stats['words_learned']}", "Learned"),
+                         (f"{stats['words_in_progress']}", "Reviewing")]:
+            col = BoxLayout(orientation="vertical", spacing=dp(1))
+            n = Label(text=num, font_size="24sp", bold=True, color=TEXT_DARK, halign="center")
+            n.bind(size=n.setter("text_size"))
+            l = Label(text=lbl, font_size="11sp", color=TEXT_LIGHT, halign="center")
+            l.bind(size=l.setter("text_size"))
+            col.add_widget(n)
+            col.add_widget(l)
+            row.add_widget(col)
+        stats_box.add_widget(row)
         root.add_widget(stats_box)
 
-        # Spacer
         root.add_widget(BoxLayout())
 
-        # Continue button
-        continue_btn = Button(
-            text="Continue Learning",
-            font_size="20sp",
-            size_hint_y=None,
-            height=dp(55),
-            background_normal="",
-            background_down="",
-            background_color=(0, 0, 0, 0),
-            color=(1, 1, 1, 1),
-            bold=True,
-        )
-        with continue_btn.canvas.before:
-            Color(0.345, 0.8, 0.008, 1)
-            self._btn1_bg = RoundedRectangle(pos=continue_btn.pos, size=continue_btn.size, radius=[dp(12)])
-        continue_btn.bind(pos=self._update_btn1, size=self._update_btn1)
-        continue_btn.bind(on_release=self._on_continue)
-        root.add_widget(continue_btn)
+        # Buttons
+        for text, color, callback in [
+            ("Continue Learning", PRIMARY, self._on_continue),
+            ("All Lessons", SECONDARY, self._on_select),
+        ]:
+            btn = Button(text=text, font_size="17sp", size_hint_y=None, height=dp(50),
+                         background_normal="", background_down="",
+                         background_color=(0, 0, 0, 0), color=BTN_TEXT)
+            _c = color  # capture
+            with btn.canvas.before:
+                Color(*_c)
+                _r = RoundedRectangle(pos=btn.pos, size=btn.size, radius=[dp(8)])
+            btn.bind(pos=lambda i, *a, r=_r: setattr(r, "pos", i.pos),
+                     size=lambda i, *a, r=_r: setattr(r, "size", i.size))
+            btn.bind(on_release=callback)
+            root.add_widget(btn)
+            root.add_widget(BoxLayout(size_hint_y=None, height=dp(4)))
 
-        # Lesson select button
-        select_btn = Button(
-            text="All Lessons",
-            font_size="18sp",
-            size_hint_y=None,
-            height=dp(50),
-            background_normal="",
-            background_down="",
-            background_color=(0, 0, 0, 0),
-            color=(1, 1, 1, 1),
-        )
-        with select_btn.canvas.before:
-            Color(0.11, 0.69, 0.965, 1)
-            self._btn2_bg = RoundedRectangle(pos=select_btn.pos, size=select_btn.size, radius=[dp(12)])
-        select_btn.bind(pos=self._update_btn2, size=self._update_btn2)
-        select_btn.bind(on_release=self._on_select)
-        root.add_widget(select_btn)
-
-        # Bottom spacer
-        root.add_widget(BoxLayout(size_hint_y=None, height=dp(15)))
-
+        root.add_widget(BoxLayout(size_hint_y=None, height=dp(10)))
         self.add_widget(root)
-
-    def _update_bg(self, instance, *args):
-        self._bg_rect.pos = instance.pos
-        self._bg_rect.size = instance.size
-
-    def _update_stats_bg(self, instance, *args):
-        self._stats_bg.pos = instance.pos
-        self._stats_bg.size = instance.size
-        self._stats_shadow.pos = (instance.x + 1, instance.y - 2)
-        self._stats_shadow.size = instance.size
-
-    def _update_btn1(self, instance, *args):
-        self._btn1_bg.pos = instance.pos
-        self._btn1_bg.size = instance.size
-
-    def _update_btn2(self, instance, *args):
-        self._btn2_bg.pos = instance.pos
-        self._btn2_bg.size = instance.size
 
     def _on_continue(self, *args):
         app = App.get_running_app()
-        units = app.curriculum.get_units()
-        for unit in units:
-            status = app.progress.get_lesson_status(unit["id"])
-            if status != "completed":
+        for unit in app.curriculum.get_units():
+            if app.progress.get_lesson_status(unit["id"]) != "completed":
                 self.manager.get_screen("exercise").unit_id = unit["id"]
                 self.manager.current = "exercise"
                 return

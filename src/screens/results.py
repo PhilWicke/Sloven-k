@@ -4,6 +4,31 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.app import App
 from kivy.metrics import dp
+from kivy.graphics import Color, Rectangle, RoundedRectangle
+
+BG = (0.96, 0.94, 0.91, 1)
+CARD = (0.99, 0.97, 0.95, 1)
+PRIMARY = (0.62, 0.32, 0.20, 1)
+SECONDARY = (0.40, 0.48, 0.32, 1)
+CORRECT = (0.38, 0.48, 0.26, 1)
+WARN = (0.68, 0.52, 0.24, 1)
+ERROR = (0.70, 0.28, 0.22, 1)
+TEXT_DARK = (0.15, 0.13, 0.11, 1)
+TEXT_MID = (0.38, 0.34, 0.30, 1)
+TEXT_LIGHT = (0.58, 0.54, 0.48, 1)
+BTN_TEXT = (1.0, 0.98, 0.96, 1)
+
+
+def _btn(text, color, height=dp(48)):
+    btn = Button(text=text, font_size="17sp", size_hint_y=None, height=height,
+                 background_normal="", background_down="",
+                 background_color=(0, 0, 0, 0), color=BTN_TEXT)
+    with btn.canvas.before:
+        Color(*color)
+        _r = RoundedRectangle(pos=btn.pos, size=btn.size, radius=[dp(8)])
+    btn.bind(pos=lambda i, *a, r=_r: setattr(r, "pos", i.pos),
+             size=lambda i, *a, r=_r: setattr(r, "size", i.size))
+    return btn
 
 
 class ResultsScreen(Screen):
@@ -15,94 +40,53 @@ class ResultsScreen(Screen):
         self.clear_widgets()
         app = App.get_running_app()
 
-        root = BoxLayout(orientation="vertical", padding=dp(20), spacing=dp(15))
+        root = BoxLayout(orientation="vertical", padding=dp(28), spacing=dp(12))
+        with root.canvas.before:
+            Color(*BG)
+            _r = Rectangle(pos=root.pos, size=root.size)
+        root.bind(pos=lambda i, *a: setattr(_r, "pos", i.pos),
+                  size=lambda i, *a: setattr(_r, "size", i.size))
 
-        # Title
-        root.add_widget(Label(
-            text="Lesson Complete!",
-            font_size="28sp",
-            bold=True,
-            color=(0.345, 0.8, 0.008, 1),
-            size_hint_y=None,
-            height=dp(50),
-        ))
+        root.add_widget(BoxLayout(size_hint_y=0.1))
 
-        # Score
-        percentage = int((self.score / self.total) * 100) if self.total > 0 else 0
-        score_color = (0.345, 0.8, 0.008, 1) if percentage >= 70 else (1, 0.6, 0, 1) if percentage >= 50 else (1, 0.294, 0.294, 1)
-        root.add_widget(Label(
-            text=f"{self.score} / {self.total}",
-            font_size="48sp",
-            bold=True,
-            color=score_color,
-            size_hint_y=None,
-            height=dp(80),
-        ))
-        root.add_widget(Label(
-            text=f"{percentage}%",
-            font_size="24sp",
-            color=score_color,
-            size_hint_y=None,
-            height=dp(40),
-        ))
+        root.add_widget(Label(text="Lesson Complete", font_size="24sp", bold=True,
+                              color=TEXT_DARK, size_hint_y=None, height=dp(36)))
+
+        pct = int((self.score / self.total) * 100) if self.total > 0 else 0
+        sc = CORRECT if pct >= 70 else WARN if pct >= 50 else ERROR
+
+        root.add_widget(Label(text=f"{self.score} / {self.total}", font_size="42sp",
+                              bold=True, color=sc, size_hint_y=None, height=dp(60)))
+        root.add_widget(Label(text=f"{pct}%", font_size="20sp", color=sc,
+                              size_hint_y=None, height=dp(30)))
 
         # Words to review
-        words_state = app.progress.get_words_state()
-        unit_vocab = app.curriculum.get_vocab(self.unit_id)
-        review_words = []
-        for item in unit_vocab:
-            state = words_state.get(item["sl"])
-            if state and state.box == 1 and state.incorrect > 0:
-                review_words.append(f"{item['sl']} = {item['en']}")
+        ws = app.progress.get_words_state()
+        vocab = app.curriculum.get_vocab(self.unit_id)
+        review = [f"{v['sl']}  →  {v['en']}" for v in vocab
+                  if (s := ws.get(v["sl"])) and s.box == 1 and s.incorrect > 0]
 
-        if review_words:
-            root.add_widget(Label(
-                text="Words to review:",
-                font_size="18sp",
-                bold=True,
-                color=(0.3, 0.3, 0.3, 1),
-                size_hint_y=None,
-                height=dp(30),
-            ))
-            review_text = "\n".join(review_words[:5])
-            review_label = Label(
-                text=review_text,
-                font_size="16sp",
-                color=(0.4, 0.4, 0.4, 1),
-                size_hint_y=None,
-                height=dp(len(review_words[:5]) * 25),
-                halign="center",
-            )
-            review_label.bind(size=review_label.setter("text_size"))
-            root.add_widget(review_label)
+        if review:
+            root.add_widget(BoxLayout(size_hint_y=None, height=dp(10)))
+            root.add_widget(Label(text="Review these:", font_size="14sp", bold=True,
+                                  color=TEXT_MID, size_hint_y=None, height=dp(22)))
+            rtxt = Label(text="\n".join(review[:5]), font_size="14sp", color=TEXT_LIGHT,
+                         size_hint_y=None, height=dp(len(review[:5]) * 22), halign="center")
+            rtxt.bind(size=rtxt.setter("text_size"))
+            root.add_widget(rtxt)
 
-        root.add_widget(BoxLayout())  # spacer
+        root.add_widget(BoxLayout())
 
-        # Retry button
-        retry_btn = Button(
-            text="Retry Lesson",
-            font_size="18sp",
-            size_hint_y=None,
-            height=dp(50),
-            background_color=(0.11, 0.69, 0.965, 1),
-            color=(1, 1, 1, 1),
-        )
-        retry_btn.bind(on_release=self._retry)
-        root.add_widget(retry_btn)
+        retry = _btn("Retry", SECONDARY)
+        retry.bind(on_release=self._retry)
+        root.add_widget(retry)
+        root.add_widget(BoxLayout(size_hint_y=None, height=dp(6)))
 
-        # Continue button
-        continue_btn = Button(
-            text="Continue",
-            font_size="18sp",
-            size_hint_y=None,
-            height=dp(50),
-            background_color=(0.345, 0.8, 0.008, 1),
-            color=(1, 1, 1, 1),
-        )
-        continue_btn.bind(on_release=self._continue)
-        root.add_widget(continue_btn)
+        cont = _btn("Continue", PRIMARY)
+        cont.bind(on_release=self._continue)
+        root.add_widget(cont)
+        root.add_widget(BoxLayout(size_hint_y=None, height=dp(14)))
 
-        root.add_widget(BoxLayout(size_hint_y=None, height=dp(15)))
         self.add_widget(root)
 
     def _retry(self, *args):

@@ -1,4 +1,5 @@
 src/audio/*.mp3
+src/audio/*.wav
 src/assets/*.png
 src/data/progress.json
 __pycache__/

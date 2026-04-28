@@ -1,81 +1,73 @@
-# Slovenčk Theme — Gemini-designed, hand-tuned for Kivy
-# Primary green: (0.345, 0.8, 0.008, 1)  ~#58CC02
-# Secondary blue: (0.11, 0.69, 0.965, 1)  ~#1CB0F6
-# Background: (0.969, 0.969, 0.969, 1)  ~#F7F7F7
-# Error red: (1, 0.294, 0.294, 1)  ~#FF4B4B
+# Slovenčk — Warm earthy minimalist theme
+#
+# Palette:
+#   Background:   warm linen    (0.96, 0.94, 0.91, 1)  ~#F5F0E8
+#   Card:         warm white    (0.99, 0.97, 0.95, 1)  ~#FDF8F2
+#   Primary:      terracotta    (0.76, 0.44, 0.32, 1)  ~#C27052
+#   Secondary:    sage          (0.55, 0.62, 0.49, 1)  ~#8C9E7D
+#   Accent:       clay          (0.65, 0.52, 0.42, 1)  ~#A6856B
+#   Text dark:    charcoal      (0.22, 0.20, 0.18, 1)  ~#38332E
+#   Text mid:     warm gray     (0.48, 0.44, 0.40, 1)  ~#7A7066
+#   Text light:   sand          (0.68, 0.64, 0.58, 1)  ~#AEA394
+#   Error:        muted red     (0.78, 0.35, 0.30, 1)  ~#C7594D
+#   Correct:      olive         (0.50, 0.58, 0.38, 1)  ~#809461
 
 <RoundedButton@Button>:
     background_normal: ''
     background_down: ''
     background_color: 0, 0, 0, 0
-    color: 1, 1, 1, 1
-    font_size: '18sp'
-    bold: True
+    color: 0.99, 0.97, 0.95, 1
+    font_size: '17sp'
     size_hint_y: None
-    height: '52dp'
+    height: '50dp'
     canvas.before:
         Color:
-            rgba: (0.345, 0.8, 0.008, 1) if self.state == 'normal' else (0.275, 0.64, 0.006, 1)
+            rgba: (0.76, 0.44, 0.32, 1) if self.state == 'normal' else (0.66, 0.38, 0.28, 1)
         RoundedRectangle:
             pos: self.pos
             size: self.size
-            radius: [dp(12)]
+            radius: [dp(8)]
 
 <SecondaryButton@Button>:
     background_normal: ''
     background_down: ''
     background_color: 0, 0, 0, 0
-    color: 1, 1, 1, 1
-    font_size: '18sp'
+    color: 0.99, 0.97, 0.95, 1
+    font_size: '17sp'
     size_hint_y: None
-    height: '52dp'
+    height: '50dp'
     canvas.before:
         Color:
-            rgba: (0.11, 0.69, 0.965, 1) if self.state == 'normal' else (0.088, 0.55, 0.77, 1)
+            rgba: (0.55, 0.62, 0.49, 1) if self.state == 'normal' else (0.48, 0.54, 0.42, 1)
         RoundedRectangle:
             pos: self.pos
             size: self.size
-            radius: [dp(12)]
+            radius: [dp(8)]
 
 <CardBox@BoxLayout>:
     orientation: 'vertical'
-    padding: dp(15)
-    spacing: dp(10)
+    padding: dp(16)
+    spacing: dp(8)
     canvas.before:
         Color:
-            rgba: 0, 0, 0, 0.06
+            rgba: 0, 0, 0, 0.03
         RoundedRectangle:
-            pos: self.x + dp(1), self.y - dp(2)
+            pos: self.x + dp(1), self.y - dp(1)
             size: self.width, self.height
-            radius: [dp(12)]
+            radius: [dp(8)]
         Color:
-            rgba: 1, 1, 1, 1
+            rgba: 0.99, 0.97, 0.95, 1
         RoundedRectangle:
             pos: self.pos
             size: self.size
-            radius: [dp(12)]
-
-<TitleLabel@Label>:
-    font_size: '28sp'
-    bold: True
-    color: 0.15, 0.15, 0.15, 1
-    halign: 'center'
-    valign: 'middle'
-    text_size: self.size
-
-<BodyLabel@Label>:
-    font_size: '20sp'
-    color: 0.25, 0.25, 0.25, 1
-    halign: 'center'
-    valign: 'middle'
-    text_size: self.size
+            radius: [dp(8)]
 
 <AppTextInput@TextInput>:
-    font_size: '20sp'
+    font_size: '18sp'
     multiline: False
     size_hint_y: None
-    height: '52dp'
-    padding: [dp(15), dp(12), dp(15), dp(12)]
-    background_color: 1, 1, 1, 1
-    foreground_color: 0, 0, 0, 1
-    cursor_color: 0.345, 0.8, 0.008, 1
+    height: '48dp'
+    padding: [dp(14), dp(12), dp(14), dp(12)]
+    background_color: 0.99, 0.97, 0.95, 1
+    foreground_color: 0.22, 0.20, 0.18, 1
+    cursor_color: 0.76, 0.44, 0.32, 1

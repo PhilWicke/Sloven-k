@@ -24,7 +24,7 @@ def builder(loader, progress):
 
 def test_build_session_returns_10_exercises(builder):
     exercises = builder.build("pozdravi")
-    assert len(exercises) == 10
+    assert len(exercises) == 12  # min(SESSION_SIZE=20, vocab_count=12)
 
 
 def test_session_has_mixed_types(builder):
@@ -50,4 +50,4 @@ def test_due_words_prioritized(builder, progress):
 
 def test_builds_for_any_unit(builder):
     exercises = builder.build("stevila")
-    assert len(exercises) == 10
+    assert len(exercises) == 12  # min(SESSION_SIZE=20, vocab_count=12)

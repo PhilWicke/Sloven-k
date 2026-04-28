@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from exercises.base import ExerciseType
+from exercises.matching import answers_match
 
 
 @dataclass
@@ -10,4 +11,4 @@ class TypingExercise:
     exercise_type: ExerciseType = ExerciseType.TYPING
 
     def check_answer(self, answer: str) -> bool:
-        return answer.strip().lower() == self.correct_answer.strip().lower()
+        return answers_match(answer, self.correct_answer)

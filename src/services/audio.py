@@ -6,8 +6,11 @@ AUDIO_DIR = Path(__file__).parent.parent / "audio"
 
 def get_audio_path(text: str) -> str:
     h = hashlib.md5(text.encode()).hexdigest()
-    path = AUDIO_DIR / f"{h}.mp3"
-    return str(path) if path.exists() else ""
+    for ext in (".wav", ".mp3"):
+        path = AUDIO_DIR / f"{h}{ext}"
+        if path.exists():
+            return str(path)
+    return ""
 
 
 def play_audio(text: str):

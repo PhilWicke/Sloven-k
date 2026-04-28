@@ -11,7 +11,7 @@ from services.curriculum import CurriculumLoader
 from services.progress import ProgressManager
 from services.srs import SRSEngine, WordState
 
-SESSION_SIZE = 10
+SESSION_SIZE = 20
 
 
 def _audio_path(text: str) -> str:
@@ -29,6 +29,7 @@ class SessionBuilder:
         vocab = self._curriculum.get_vocab(unit_id)
         sentences = self._curriculum.get_sentences(unit_id)
         words_state = self._progress.get_words_state()
+        session_size = min(SESSION_SIZE, len(vocab))
 
         # Separate due words and new words
         due_words = []
@@ -41,19 +42,19 @@ class SessionBuilder:
                 new_words.append(item)
 
         # Pick words for this session: due first, then new
-        selected = due_words[:SESSION_SIZE]
-        remaining = SESSION_SIZE - len(selected)
+        selected = due_words[:session_size]
+        remaining = session_size - len(selected)
         if remaining > 0:
             random.shuffle(new_words)
             selected.extend(new_words[:remaining])
 
         # If still not enough, add non-due reviewed words
-        if len(selected) < SESSION_SIZE:
+        if len(selected) < session_size:
             reviewed = [v for v in vocab if v not in selected]
             random.shuffle(reviewed)
-            selected.extend(reviewed[: SESSION_SIZE - len(selected)])
+            selected.extend(reviewed[: session_size - len(selected)])
 
-        selected = selected[:SESSION_SIZE]
+        selected = selected[:session_size]
 
         # Build exercises with mixed types, no two same in a row
         all_vocab_words = [v["en"] for v in vocab]
