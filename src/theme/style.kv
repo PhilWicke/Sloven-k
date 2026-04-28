@@ -1,0 +1,48 @@
+# Default theme — regenerate with: uv run python scripts/generate_assets.py
+
+<RoundedButton@Button>:
+    background_color: 0, 0, 0, 0
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (0.345, 0.8, 0.008, 1) if self.state == 'normal' else (0.275, 0.64, 0.006, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [15]
+    color: 1, 1, 1, 1
+    font_size: '18sp'
+    size_hint_y: None
+    height: '50dp'
+
+<CardBox@BoxLayout>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10]
+    padding: '15dp'
+    spacing: '10dp'
+
+<AppLabel@Label>:
+    font_size: '20sp'
+    color: 0.2, 0.2, 0.2, 1
+
+<TitleLabel@Label>:
+    font_size: '28sp'
+    color: 0.2, 0.2, 0.2, 1
+    bold: True
+
+<AppProgressBar@ProgressBar>:
+    max: 100
+    size_hint_y: None
+    height: '8dp'
+
+<AppTextInput@TextInput>:
+    font_size: '20sp'
+    multiline: False
+    size_hint_y: None
+    height: '50dp'
+    padding: [15, 12, 15, 12]
