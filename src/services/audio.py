@@ -3,6 +3,9 @@ from pathlib import Path
 
 AUDIO_DIR = Path(__file__).parent.parent / "audio"
 
+# Keep reference to prevent garbage collection during playback
+_current_sound = None
+
 
 def get_audio_path(text: str) -> str:
     h = hashlib.md5(text.encode()).hexdigest()
@@ -14,14 +17,17 @@ def get_audio_path(text: str) -> str:
 
 
 def play_audio(text: str):
-    """Play audio for the given Slovenian text. No-op if file missing or Kivy unavailable."""
+    """Play audio for the given Slovenian text. No-op if file missing."""
+    global _current_sound
     path = get_audio_path(text)
     if not path:
         return
     try:
         from kivy.core.audio import SoundLoader
-        sound = SoundLoader.load(path)
-        if sound:
-            sound.play()
-    except Exception:
-        pass  # audio is optional, don't crash
+        if _current_sound:
+            _current_sound.stop()
+        _current_sound = SoundLoader.load(path)
+        if _current_sound:
+            _current_sound.play()
+    except Exception as e:
+        print(f"Audio error: {e}")

@@ -11,24 +11,23 @@ ASSET_DIR = Path(__file__).parent.parent / "src" / "assets"
 THEME_DIR = Path(__file__).parent.parent / "src" / "theme"
 
 STYLE = (
-    "Minimalist line-art symbol on a plain muted earthy background. "
-    "Warm tones: terracotta, sand, olive, clay, sage. "
-    "Thin elegant strokes, no cartoon style, no childish elements. "
-    "Sophisticated, adult aesthetic. Simple, clean, no text, no gradients. "
-    "Single icon centered on solid warm-toned background, square aspect ratio."
+    "Single minimal line-art icon on a solid #E8E0D4 (warm sand) background. "
+    "Thin dark brown (#5C4A3A) strokes only, no fills, no shading, no gradients. "
+    "Consistent 2px stroke weight. Centered in frame. 64x64px style, "
+    "extremely simple — no more than 5-6 strokes. Square aspect ratio. No text."
 )
 
 UNIT_ICONS = {
-    "pozdravi": f"A single minimalist open hand symbol, thin line art. {STYLE}",
-    "stevila": f"A minimalist '123' typographic symbol, thin serif font. {STYLE}",
-    "barve": f"Three overlapping circles in muted earthy tones, minimalist. {STYLE}",
-    "hrana": f"A minimalist wheat stalk or bread loaf line drawing. {STYLE}",
-    "druzina": f"Two or three simple abstract human figures, thin lines. {STYLE}",
-    "zivali": f"A minimalist fox or bird silhouette, single elegant line. {STYLE}",
-    "telo": f"A minimalist abstract human figure outline, da Vinci inspired. {STYLE}",
-    "oblacila": f"A minimalist hanger or coat silhouette, single thin line. {STYLE}",
-    "hisa": f"A minimalist house outline, geometric, single thin line. {STYLE}",
-    "cas": f"A minimalist sundial or clock face, thin elegant lines. {STYLE}",
+    "pozdravi": f"A single raised open palm. {STYLE}",
+    "stevila": f"The numeral 3 in a thin serif. {STYLE}",
+    "barve": f"Three overlapping circles. {STYLE}",
+    "hrana": f"A simple apple with one leaf. {STYLE}",
+    "druzina": f"Two stick figures side by side. {STYLE}",
+    "zivali": f"A simple bird in profile. {STYLE}",
+    "telo": f"A minimal human silhouette. {STYLE}",
+    "oblacila": f"A coat hanger. {STYLE}",
+    "hisa": f"A house outline, square plus triangle roof. {STYLE}",
+    "cas": f"A circle with two clock hands. {STYLE}",
 }
 
 

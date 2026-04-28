@@ -41,20 +41,30 @@ class SessionBuilder:
             elif state is None:
                 new_words.append(item)
 
-        # Pick words for this session: due first, then new
-        selected = due_words[:session_size]
-        remaining = session_size - len(selected)
-        if remaining > 0:
-            random.shuffle(new_words)
-            selected.extend(new_words[:remaining])
+        # Pick words for this session: due first, then new — no duplicates
+        selected = []
+        seen_words = set()
+
+        for item in due_words:
+            if item["sl"] not in seen_words and len(selected) < session_size:
+                selected.append(item)
+                seen_words.add(item["sl"])
+
+        random.shuffle(new_words)
+        for item in new_words:
+            if item["sl"] not in seen_words and len(selected) < session_size:
+                selected.append(item)
+                seen_words.add(item["sl"])
 
         # If still not enough, add non-due reviewed words
         if len(selected) < session_size:
-            reviewed = [v for v in vocab if v not in selected]
+            reviewed = [v for v in vocab if v["sl"] not in seen_words]
             random.shuffle(reviewed)
-            selected.extend(reviewed[: session_size - len(selected)])
-
-        selected = selected[:session_size]
+            for item in reviewed:
+                if len(selected) >= session_size:
+                    break
+                selected.append(item)
+                seen_words.add(item["sl"])
 
         # Build exercises with mixed types, no two same in a row
         all_vocab_words = [v["en"] for v in vocab]

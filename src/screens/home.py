@@ -11,15 +11,15 @@ from kivy.graphics import Color, Rectangle, RoundedRectangle
 
 ASSETS_DIR = Path(__file__).parent.parent / "assets"
 
-# Earthy palette — darkened for contrast
-BG = (0.96, 0.94, 0.91, 1)
-CARD = (0.99, 0.97, 0.95, 1)
-PRIMARY = (0.62, 0.32, 0.20, 1)
-SECONDARY = (0.40, 0.48, 0.32, 1)
-TEXT_DARK = (0.15, 0.13, 0.11, 1)
-TEXT_MID = (0.38, 0.34, 0.30, 1)
-TEXT_LIGHT = (0.58, 0.54, 0.48, 1)
-BTN_TEXT = (1.0, 0.98, 0.96, 1)
+# Warm vibrant palette
+BG = (0.97, 0.95, 0.93, 1)
+CARD = (1, 1, 1, 1)
+PRIMARY = (0.72, 0.30, 0.16, 1)
+SECONDARY = (0.36, 0.50, 0.32, 1)
+TEXT_DARK = (0.14, 0.12, 0.10, 1)
+TEXT_MID = (0.40, 0.36, 0.32, 1)
+TEXT_LIGHT = (0.60, 0.56, 0.50, 1)
+BTN_TEXT = (1, 1, 1, 1)
 
 
 class HomeScreen(Screen):

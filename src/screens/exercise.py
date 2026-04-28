@@ -15,21 +15,21 @@ from exercises.session import SessionBuilder
 from services.srs import SRSEngine, WordState
 from services.audio import play_audio
 
-# Earthy palette — darkened for contrast
-BG = (0.96, 0.94, 0.91, 1)
-CARD = (0.99, 0.97, 0.95, 1)
-PRIMARY = (0.62, 0.32, 0.20, 1)       # darker terracotta
-SECONDARY = (0.40, 0.48, 0.32, 1)     # darker sage
-ACCENT = (0.52, 0.40, 0.30, 1)        # darker clay
-TEXT_DARK = (0.15, 0.13, 0.11, 1)
-TEXT_MID = (0.38, 0.34, 0.30, 1)
-TEXT_LIGHT = (0.58, 0.54, 0.48, 1)
-BTN_TEXT = (1.0, 0.98, 0.96, 1)
-CORRECT = (0.38, 0.48, 0.26, 1)       # darker olive
-ERROR = (0.70, 0.28, 0.22, 1)         # darker muted red
-CHOICE_BG = (0.94, 0.91, 0.87, 1)     # slightly darker choice bg
-PROGRESS_BG = (0.88, 0.86, 0.82, 1)
-PROGRESS_FG = (0.62, 0.32, 0.20, 1)   # terracotta progress
+# Warm vibrant palette
+BG = (0.97, 0.95, 0.93, 1)
+CARD = (1, 1, 1, 1)
+PRIMARY = (0.72, 0.30, 0.16, 1)
+SECONDARY = (0.36, 0.50, 0.32, 1)
+ACCENT = (0.55, 0.42, 0.22, 1)
+TEXT_DARK = (0.14, 0.12, 0.10, 1)
+TEXT_MID = (0.40, 0.36, 0.32, 1)
+TEXT_LIGHT = (0.60, 0.56, 0.50, 1)
+BTN_TEXT = (1, 1, 1, 1)
+CORRECT = (0.30, 0.52, 0.22, 1)
+ERROR = (0.72, 0.22, 0.16, 1)
+CHOICE_BG = (1, 1, 1, 1)
+PROGRESS_BG = (0.90, 0.88, 0.85, 1)
+PROGRESS_FG = (0.72, 0.30, 0.16, 1)
 
 
 def _make_btn(text, color, height=dp(48), font_size="16sp", bold=False):
@@ -87,6 +87,21 @@ class ExerciseScreen(Screen):
 
         ex = self._exercises[self._current_idx]
         root = self._make_root()
+
+        # Top bar: back button + counter
+        top_bar = BoxLayout(size_hint_y=None, height=dp(32), spacing=dp(8))
+        back = Button(text="<", size_hint=(None, None), width=dp(32), height=dp(32),
+                      font_size="16sp", background_normal="", background_down="",
+                      background_color=(0, 0, 0, 0), color=TEXT_MID)
+        with back.canvas.before:
+            Color(0.90, 0.88, 0.85, 1)
+            _br = RoundedRectangle(pos=back.pos, size=back.size, radius=[dp(6)])
+        back.bind(pos=lambda i, *a: setattr(_br, "pos", i.pos),
+                  size=lambda i, *a: setattr(_br, "size", i.size))
+        back.bind(on_release=lambda *a: setattr(self.manager, "current", "home"))
+        top_bar.add_widget(back)
+        top_bar.add_widget(BoxLayout())  # spacer
+        root.add_widget(top_bar)
 
         # Progress bar (custom drawn)
         progress_box = BoxLayout(size_hint_y=None, height=dp(6))

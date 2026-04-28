@@ -1,265 +1,573 @@
 {
   "units": [
     {
-      "id": "pozdravi",
+      "id": "pozdravi_1",
+      "parent": "pozdravi",
       "name_sl": "Pozdravi",
       "name_en": "Greetings",
+      "subunit": 1,
+      "subunit_name": "Basic Hellos",
       "order": 1,
       "vocab": [
         {"sl": "dober dan", "en": "good day", "gender": null, "phonetic": "DOH-ber dahn", "example": "Dober dan, kako ste?", "example_en": "Good day, how are you?"},
         {"sl": "živjo", "en": "hello", "gender": null, "phonetic": "ZHEE-vyo", "example": "Živjo, kako si?", "example_en": "Hello, how are you?"},
         {"sl": "hvala", "en": "thank you", "gender": null, "phonetic": "HVAH-lah", "example": "Hvala za pomoč.", "example_en": "Thank you for the help."},
-        {"sl": "prosim", "en": "please / you're welcome", "gender": null, "phonetic": "PROH-seem", "example": "Prosim, pomagajte mi.", "example_en": "Please, help me."},
-        {"sl": "da", "en": "yes", "gender": null, "phonetic": "dah", "example": "Da, razumem.", "example_en": "Yes, I understand."},
-        {"sl": "ne", "en": "no", "gender": null, "phonetic": "neh", "example": "Ne, hvala.", "example_en": "No, thank you."},
+        {"sl": "prosim", "en": "please / you're welcome", "gender": null, "phonetic": "PROH-seem", "example": "Prosim, pomagajte mi.", "example_en": "Please, help me."}
+      ],
+      "sentences": [
+        {"sl": "Živjo, hvala za pomoč.", "en": "Hello, thank you for the help.", "difficulty": 1, "vocab_ids": ["živjo", "hvala"]},
+        {"sl": "Dober dan, prosim, pomagajte mi.", "en": "Good day, please help me.", "difficulty": 1, "vocab_ids": ["dober dan", "prosim"]}
+      ]
+    },
+    {
+      "id": "pozdravi_2",
+      "parent": "pozdravi",
+      "name_sl": "Pozdravi",
+      "name_en": "Greetings",
+      "subunit": 2,
+      "subunit_name": "Time of Day",
+      "order": 2,
+      "vocab": [
         {"sl": "dobro jutro", "en": "good morning", "gender": null, "phonetic": "DOH-broh YOO-troh", "example": "Dobro jutro, kako ste spali?", "example_en": "Good morning, how did you sleep?"},
         {"sl": "dober večer", "en": "good evening", "gender": null, "phonetic": "DOH-ber VEH-cher", "example": "Dober večer, gospod.", "example_en": "Good evening, sir."},
         {"sl": "lahko noč", "en": "good night", "gender": null, "phonetic": "LAH-koh nohch", "example": "Lahko noč, spi dobro.", "example_en": "Good night, sleep well."},
-        {"sl": "nasvidenje", "en": "goodbye", "gender": null, "phonetic": "nahs-VEE-den-yeh", "example": "Nasvidenje, se vidimo jutri.", "example_en": "Goodbye, see you tomorrow."},
+        {"sl": "nasvidenje", "en": "goodbye", "gender": null, "phonetic": "nahs-VEE-den-yeh", "example": "Nasvidenje, se vidimo jutri.", "example_en": "Goodbye, see you tomorrow."}
+      ],
+      "sentences": [
+        {"sl": "Dobro jutro! Dober večer!", "en": "Good morning! Good evening!", "difficulty": 1, "vocab_ids": ["dobro jutro", "dober večer"]},
+        {"sl": "Nasvidenje, lahko noč!", "en": "Goodbye, good night!", "difficulty": 1, "vocab_ids": ["nasvidenje", "lahko noč"]}
+      ]
+    },
+    {
+      "id": "pozdravi_3",
+      "parent": "pozdravi",
+      "name_sl": "Pozdravi",
+      "name_en": "Greetings",
+      "subunit": 3,
+      "subunit_name": "Polite Phrases",
+      "order": 3,
+      "vocab": [
+        {"sl": "da", "en": "yes", "gender": null, "phonetic": "dah", "example": "Da, razumem.", "example_en": "Yes, I understand."},
+        {"sl": "ne", "en": "no", "gender": null, "phonetic": "neh", "example": "Ne, hvala.", "example_en": "No, thank you."},
         {"sl": "oprostite", "en": "excuse me / sorry", "gender": null, "phonetic": "oh-prohs-TEE-teh", "example": "Oprostite, kje je postaja?", "example_en": "Excuse me, where is the station?"},
         {"sl": "kako ste", "en": "how are you (formal)", "gender": null, "phonetic": "KAH-koh steh", "example": "Dober dan, kako ste?", "example_en": "Good day, how are you?"}
       ],
       "sentences": [
-        {"sl": "Dober dan, kako ste?", "en": "Good day, how are you?", "difficulty": 1, "vocab_ids": ["dober dan", "kako ste"]},
-        {"sl": "Živjo, hvala, dobro sem.", "en": "Hello, thank you, I am well.", "difficulty": 1, "vocab_ids": ["živjo", "hvala"]},
-        {"sl": "Nasvidenje, lahko noč!", "en": "Goodbye, good night!", "difficulty": 1, "vocab_ids": ["nasvidenje", "lahko noč"]},
-        {"sl": "Oprostite, prosim, kje je hotel?", "en": "Excuse me, please, where is the hotel?", "difficulty": 2, "vocab_ids": ["oprostite", "prosim"]}
+        {"sl": "Oprostite, kako ste?", "en": "Excuse me, how are you?", "difficulty": 1, "vocab_ids": ["oprostite", "kako ste"]},
+        {"sl": "Da, razumem. Ne, hvala.", "en": "Yes, I understand. No, thank you.", "difficulty": 1, "vocab_ids": ["da", "ne"]}
       ]
     },
     {
-      "id": "stevila",
+      "id": "stevila_1",
+      "parent": "stevila",
       "name_sl": "Števila",
       "name_en": "Numbers",
-      "order": 2,
+      "subunit": 1,
+      "subunit_name": "One to Four",
+      "order": 4,
       "vocab": [
         {"sl": "ena", "en": "one", "gender": "f", "phonetic": "EH-nah", "example": "Imam eno sestro.", "example_en": "I have one sister."},
         {"sl": "dva", "en": "two", "gender": "m", "phonetic": "dvah", "example": "Kupil sem dva kruha.", "example_en": "I bought two loaves of bread."},
         {"sl": "tri", "en": "three", "gender": null, "phonetic": "tree", "example": "Imam tri mačke.", "example_en": "I have three cats."},
-        {"sl": "štiri", "en": "four", "gender": null, "phonetic": "SHTEE-ree", "example": "Štiri letni časi so v letu.", "example_en": "There are four seasons in a year."},
+        {"sl": "štiri", "en": "four", "gender": null, "phonetic": "SHTEE-ree", "example": "Štiri letni časi so v letu.", "example_en": "There are four seasons in a year."}
+      ],
+      "sentences": [
+        {"sl": "Imam dva brata in eno sestro.", "en": "I have two brothers and one sister.", "difficulty": 1, "vocab_ids": ["dva", "ena"]},
+        {"sl": "Imam tri mačke in štiri ribe.", "en": "I have three cats and four fish.", "difficulty": 1, "vocab_ids": ["tri", "štiri"]}
+      ]
+    },
+    {
+      "id": "stevila_2",
+      "parent": "stevila",
+      "name_sl": "Števila",
+      "name_en": "Numbers",
+      "subunit": 2,
+      "subunit_name": "Five to Eight",
+      "order": 5,
+      "vocab": [
         {"sl": "pet", "en": "five", "gender": null, "phonetic": "peht", "example": "Pet prstov imam na roki.", "example_en": "I have five fingers on my hand."},
         {"sl": "šest", "en": "six", "gender": null, "phonetic": "shehst", "example": "Šest ur sem spal.", "example_en": "I slept for six hours."},
         {"sl": "sedem", "en": "seven", "gender": null, "phonetic": "SEH-dem", "example": "Teden ima sedem dni.", "example_en": "A week has seven days."},
-        {"sl": "osem", "en": "eight", "gender": null, "phonetic": "OH-sem", "example": "Ob osmih grem v službo.", "example_en": "I go to work at eight."},
+        {"sl": "osem", "en": "eight", "gender": null, "phonetic": "OH-sem", "example": "Ob osmih grem v službo.", "example_en": "I go to work at eight."}
+      ],
+      "sentences": [
+        {"sl": "Pet plus tri je osem.", "en": "Five plus three is eight.", "difficulty": 1, "vocab_ids": ["pet", "osem"]},
+        {"sl": "Teden ima sedem dni in šest ur počitka.", "en": "A week has seven days and six hours of rest.", "difficulty": 1, "vocab_ids": ["sedem", "šest"]}
+      ]
+    },
+    {
+      "id": "stevila_3",
+      "parent": "stevila",
+      "name_sl": "Števila",
+      "name_en": "Numbers",
+      "subunit": 3,
+      "subunit_name": "Nine and Beyond",
+      "order": 6,
+      "vocab": [
         {"sl": "devet", "en": "nine", "gender": null, "phonetic": "DEH-vet", "example": "Devet mesecev traja nosečnost.", "example_en": "Pregnancy lasts nine months."},
         {"sl": "deset", "en": "ten", "gender": null, "phonetic": "DEH-set", "example": "Deset evrov stane.", "example_en": "It costs ten euros."},
         {"sl": "enajst", "en": "eleven", "gender": null, "phonetic": "EH-nayst", "example": "Ob enajstih se dobimo.", "example_en": "We meet at eleven."},
         {"sl": "dvanajst", "en": "twelve", "gender": null, "phonetic": "DVAH-nayst", "example": "Ura je dvanajst.", "example_en": "It is twelve o'clock."}
       ],
       "sentences": [
-        {"sl": "Imam dva brata in eno sestro.", "en": "I have two brothers and one sister.", "difficulty": 1, "vocab_ids": ["dva", "ena"]},
-        {"sl": "Pet plus tri je osem.", "en": "Five plus three is eight.", "difficulty": 1, "vocab_ids": ["pet", "tri", "osem"]},
-        {"sl": "Teden ima sedem dni.", "en": "A week has seven days.", "difficulty": 1, "vocab_ids": ["sedem"]},
-        {"sl": "Deset evrov prosim.", "en": "Ten euros please.", "difficulty": 2, "vocab_ids": ["deset"]}
+        {"sl": "Deset evrov prosim.", "en": "Ten euros please.", "difficulty": 1, "vocab_ids": ["deset"]},
+        {"sl": "Ob enajstih ali dvanajstih se dobimo.", "en": "We meet at eleven or twelve.", "difficulty": 1, "vocab_ids": ["enajst", "dvanajst"]}
       ]
     },
     {
-      "id": "barve",
+      "id": "barve_1",
+      "parent": "barve",
       "name_sl": "Barve",
       "name_en": "Colors",
-      "order": 3,
+      "subunit": 1,
+      "subunit_name": "Primary Colors",
+      "order": 7,
       "vocab": [
         {"sl": "rdeča", "en": "red", "gender": "f", "phonetic": "RDEH-chah", "example": "Kupila sem rdečo majico.", "example_en": "I bought a red t-shirt."},
         {"sl": "modra", "en": "blue", "gender": "f", "phonetic": "MOH-drah", "example": "Nebo je modro.", "example_en": "The sky is blue."},
         {"sl": "zelena", "en": "green", "gender": "f", "phonetic": "zeh-LEH-nah", "example": "Trava je zelena.", "example_en": "The grass is green."},
-        {"sl": "rumena", "en": "yellow", "gender": "f", "phonetic": "roo-MEH-nah", "example": "Sonce je rumeno.", "example_en": "The sun is yellow."},
+        {"sl": "rumena", "en": "yellow", "gender": "f", "phonetic": "roo-MEH-nah", "example": "Sonce je rumeno.", "example_en": "The sun is yellow."}
+      ],
+      "sentences": [
+        {"sl": "Nebo je modro in zeleno je drevo.", "en": "The sky is blue and the tree is green.", "difficulty": 1, "vocab_ids": ["modra", "zelena"]},
+        {"sl": "Rdeča roža in rumeno sonce.", "en": "A red rose and a yellow sun.", "difficulty": 1, "vocab_ids": ["rdeča", "rumena"]}
+      ]
+    },
+    {
+      "id": "barve_2",
+      "parent": "barve",
+      "name_sl": "Barve",
+      "name_en": "Colors",
+      "subunit": 2,
+      "subunit_name": "Black and White",
+      "order": 8,
+      "vocab": [
         {"sl": "bela", "en": "white", "gender": "f", "phonetic": "BEH-lah", "example": "Sneg je bel.", "example_en": "Snow is white."},
         {"sl": "črna", "en": "black", "gender": "f", "phonetic": "CHUR-nah", "example": "Moja mačka je črna.", "example_en": "My cat is black."},
         {"sl": "oranžna", "en": "orange", "gender": "f", "phonetic": "oh-RAHN-zhnah", "example": "Pomaranča je oranžna.", "example_en": "The orange is orange."},
-        {"sl": "roza", "en": "pink", "gender": "f", "phonetic": "ROH-zah", "example": "Ima roza obleko.", "example_en": "She has a pink dress."},
+        {"sl": "roza", "en": "pink", "gender": "f", "phonetic": "ROH-zah", "example": "Ima roza obleko.", "example_en": "She has a pink dress."}
+      ],
+      "sentences": [
+        {"sl": "Moja mačka je črna in bela.", "en": "My cat is black and white.", "difficulty": 1, "vocab_ids": ["črna", "bela"]},
+        {"sl": "Ima roza obleko in oranžni šal.", "en": "She has a pink dress and an orange scarf.", "difficulty": 1, "vocab_ids": ["roza", "oranžna"]}
+      ]
+    },
+    {
+      "id": "barve_3",
+      "parent": "barve",
+      "name_sl": "Barve",
+      "name_en": "Colors",
+      "subunit": 3,
+      "subunit_name": "Earth Tones",
+      "order": 9,
+      "vocab": [
         {"sl": "vijolična", "en": "purple", "gender": "f", "phonetic": "vee-yoh-LEECH-nah", "example": "Vijolične rože so lepe.", "example_en": "Purple flowers are beautiful."},
         {"sl": "rjava", "en": "brown", "gender": "f", "phonetic": "RYAH-vah", "example": "Miza je rjava.", "example_en": "The table is brown."},
         {"sl": "siva", "en": "gray", "gender": "f", "phonetic": "SEE-vah", "example": "Oblaki so sivi.", "example_en": "The clouds are gray."},
         {"sl": "zlata", "en": "golden", "gender": "f", "phonetic": "ZLAH-tah", "example": "Nosi zlat prstan.", "example_en": "She wears a golden ring."}
       ],
       "sentences": [
-        {"sl": "Nebo je modro in zeleno je drevo.", "en": "The sky is blue and the tree is green.", "difficulty": 1, "vocab_ids": ["modra", "zelena"]},
-        {"sl": "Moja mačka je črna in bela.", "en": "My cat is black and white.", "difficulty": 1, "vocab_ids": ["črna", "bela"]},
-        {"sl": "Rdeča rdeča roža raste v vrtu.", "en": "A red red rose grows in the garden.", "difficulty": 2, "vocab_ids": ["rdeča"]},
-        {"sl": "Katera barva ti je všeč?", "en": "Which color do you like?", "difficulty": 2, "vocab_ids": []}
+        {"sl": "Miza je rjava in siva je stena.", "en": "The table is brown and the wall is gray.", "difficulty": 1, "vocab_ids": ["rjava", "siva"]},
+        {"sl": "Vijolične rože in zlati prstan.", "en": "Purple flowers and a golden ring.", "difficulty": 1, "vocab_ids": ["vijolična", "zlata"]}
       ]
     },
     {
-      "id": "hrana",
+      "id": "hrana_1",
+      "parent": "hrana",
       "name_sl": "Hrana",
       "name_en": "Food",
-      "order": 4,
+      "subunit": 1,
+      "subunit_name": "Staples",
+      "order": 10,
       "vocab": [
         {"sl": "kruh", "en": "bread", "gender": "m", "phonetic": "krooh", "example": "Kupil sem svež kruh.", "example_en": "I bought fresh bread."},
         {"sl": "mleko", "en": "milk", "gender": "n", "phonetic": "MLEH-koh", "example": "Vsako jutro pijem mleko.", "example_en": "I drink milk every morning."},
         {"sl": "jabolko", "en": "apple", "gender": "n", "phonetic": "YAH-bol-koh", "example": "Rad jem jabolka.", "example_en": "I like to eat apples."},
-        {"sl": "sir", "en": "cheese", "gender": "m", "phonetic": "seer", "example": "Tole je okusni sir.", "example_en": "This is a tasty cheese."},
+        {"sl": "sir", "en": "cheese", "gender": "m", "phonetic": "seer", "example": "Tole je okusni sir.", "example_en": "This is a tasty cheese."}
+      ],
+      "sentences": [
+        {"sl": "Imam kruh, sir in jabolko.", "en": "I have bread, cheese and an apple.", "difficulty": 1, "vocab_ids": ["kruh", "sir", "jabolko"]},
+        {"sl": "Vsako jutro pijem mleko in jem kruh.", "en": "Every morning I drink milk and eat bread.", "difficulty": 1, "vocab_ids": ["mleko", "kruh"]}
+      ]
+    },
+    {
+      "id": "hrana_2",
+      "parent": "hrana",
+      "name_sl": "Hrana",
+      "name_en": "Food",
+      "subunit": 2,
+      "subunit_name": "Protein",
+      "order": 11,
+      "vocab": [
         {"sl": "meso", "en": "meat", "gender": "n", "phonetic": "MEH-soh", "example": "Danes imamo meso za kosilo.", "example_en": "Today we have meat for lunch."},
         {"sl": "riba", "en": "fish", "gender": "f", "phonetic": "REE-bah", "example": "Riba je zdrava hrana.", "example_en": "Fish is healthy food."},
         {"sl": "voda", "en": "water", "gender": "f", "phonetic": "VOH-dah", "example": "Prosim, kozarec vode.", "example_en": "Please, a glass of water."},
-        {"sl": "kava", "en": "coffee", "gender": "f", "phonetic": "KAH-vah", "example": "Zjutraj pijem kavo.", "example_en": "I drink coffee in the morning."},
+        {"sl": "kava", "en": "coffee", "gender": "f", "phonetic": "KAH-vah", "example": "Zjutraj pijem kavo.", "example_en": "I drink coffee in the morning."}
+      ],
+      "sentences": [
+        {"sl": "Ali ješ meso ali ribo?", "en": "Do you eat meat or fish?", "difficulty": 1, "vocab_ids": ["meso", "riba"]},
+        {"sl": "Prosim, kozarec vode in kavo.", "en": "Please, a glass of water and a coffee.", "difficulty": 1, "vocab_ids": ["voda", "kava"]}
+      ]
+    },
+    {
+      "id": "hrana_3",
+      "parent": "hrana",
+      "name_sl": "Hrana",
+      "name_en": "Food",
+      "subunit": 3,
+      "subunit_name": "Meals",
+      "order": 12,
+      "vocab": [
         {"sl": "čaj", "en": "tea", "gender": "m", "phonetic": "chahy", "example": "Zvečer pijem zeliščni čaj.", "example_en": "In the evening I drink herbal tea."},
         {"sl": "juha", "en": "soup", "gender": "f", "phonetic": "YOO-hah", "example": "Topla juha je dobra pozimi.", "example_en": "Warm soup is good in winter."},
         {"sl": "solata", "en": "salad", "gender": "f", "phonetic": "soh-LAH-tah", "example": "Za kosilo bom jedel solato.", "example_en": "I will eat salad for lunch."},
         {"sl": "riž", "en": "rice", "gender": "m", "phonetic": "reezh", "example": "Riž z zelenjavo je okusen.", "example_en": "Rice with vegetables is tasty."}
       ],
       "sentences": [
-        {"sl": "Prosim, kozarec vode in kavo.", "en": "Please, a glass of water and a coffee.", "difficulty": 1, "vocab_ids": ["voda", "kava"]},
-        {"sl": "Imam kruh, sir in jabolko.", "en": "I have bread, cheese and an apple.", "difficulty": 1, "vocab_ids": ["kruh", "sir", "jabolko"]},
-        {"sl": "Za kosilo bom jedel juho in solato.", "en": "For lunch I will eat soup and salad.", "difficulty": 2, "vocab_ids": ["juha", "solata"]},
-        {"sl": "Ali ješ meso ali ribo?", "en": "Do you eat meat or fish?", "difficulty": 2, "vocab_ids": ["meso", "riba"]}
+        {"sl": "Za kosilo bom jedel juho in solato.", "en": "For lunch I will eat soup and salad.", "difficulty": 1, "vocab_ids": ["juha", "solata"]},
+        {"sl": "Zvečer pijem čaj in jem riž.", "en": "In the evening I drink tea and eat rice.", "difficulty": 1, "vocab_ids": ["čaj", "riž"]}
       ]
     },
     {
-      "id": "druzina",
+      "id": "druzina_1",
+      "parent": "druzina",
       "name_sl": "Družina",
       "name_en": "Family",
-      "order": 5,
+      "subunit": 1,
+      "subunit_name": "Parents",
+      "order": 13,
       "vocab": [
         {"sl": "mama", "en": "mom", "gender": "f", "phonetic": "MAH-mah", "example": "Moja mama je zdravnica.", "example_en": "My mom is a doctor."},
         {"sl": "oče", "en": "father", "gender": "m", "phonetic": "OH-cheh", "example": "Moj oče dela v pisarni.", "example_en": "My father works in an office."},
         {"sl": "brat", "en": "brother", "gender": "m", "phonetic": "braht", "example": "Moj brat je mlajši od mene.", "example_en": "My brother is younger than me."},
-        {"sl": "sestra", "en": "sister", "gender": "f", "phonetic": "SEHS-trah", "example": "Moja sestra živi v Ljubljani.", "example_en": "My sister lives in Ljubljana."},
+        {"sl": "sestra", "en": "sister", "gender": "f", "phonetic": "SEHS-trah", "example": "Moja sestra živi v Ljubljani.", "example_en": "My sister lives in Ljubljana."}
+      ],
+      "sentences": [
+        {"sl": "Moja mama in oče živita v Celju.", "en": "My mom and father live in Celje.", "difficulty": 1, "vocab_ids": ["mama", "oče"]},
+        {"sl": "Imam brata in sestro.", "en": "I have a brother and a sister.", "difficulty": 1, "vocab_ids": ["brat", "sestra"]}
+      ]
+    },
+    {
+      "id": "druzina_2",
+      "parent": "druzina",
+      "name_sl": "Družina",
+      "name_en": "Family",
+      "subunit": 2,
+      "subunit_name": "Children",
+      "order": 14,
+      "vocab": [
         {"sl": "sin", "en": "son", "gender": "m", "phonetic": "seen", "example": "Njen sin hodi v šolo.", "example_en": "Her son goes to school."},
         {"sl": "hči", "en": "daughter", "gender": "f", "phonetic": "hchee", "example": "Moja hči igra klavir.", "example_en": "My daughter plays piano."},
         {"sl": "babica", "en": "grandmother", "gender": "f", "phonetic": "BAH-bee-tsah", "example": "Babica peče kolač.", "example_en": "Grandmother bakes a cake."},
-        {"sl": "dedek", "en": "grandfather", "gender": "m", "phonetic": "DEH-dek", "example": "Dedek bere časopis.", "example_en": "Grandfather reads the newspaper."},
+        {"sl": "dedek", "en": "grandfather", "gender": "m", "phonetic": "DEH-dek", "example": "Dedek bere časopis.", "example_en": "Grandfather reads the newspaper."}
+      ],
+      "sentences": [
+        {"sl": "Moja hči in sin hodita v šolo.", "en": "My daughter and son go to school.", "difficulty": 1, "vocab_ids": ["hči", "sin"]},
+        {"sl": "Babica in dedek sta prišla na obisk.", "en": "Grandmother and grandfather came to visit.", "difficulty": 1, "vocab_ids": ["babica", "dedek"]}
+      ]
+    },
+    {
+      "id": "druzina_3",
+      "parent": "druzina",
+      "name_sl": "Družina",
+      "name_en": "Family",
+      "subunit": 3,
+      "subunit_name": "Extended",
+      "order": 15,
+      "vocab": [
         {"sl": "teta", "en": "aunt", "gender": "f", "phonetic": "TEH-tah", "example": "Teta Ana je prišla na obisk.", "example_en": "Aunt Ana came to visit."},
         {"sl": "stric", "en": "uncle", "gender": "m", "phonetic": "streets", "example": "Stric Jože ima avto.", "example_en": "Uncle Jože has a car."},
         {"sl": "bratranec", "en": "male cousin", "gender": "m", "phonetic": "brah-TRAH-nets", "example": "Moj bratranec je star dvajset let.", "example_en": "My male cousin is twenty years old."},
         {"sl": "sestrična", "en": "female cousin", "gender": "f", "phonetic": "sehs-TREE-chnah", "example": "Sestrična živi v Mariboru.", "example_en": "My female cousin lives in Maribor."}
       ],
       "sentences": [
-        {"sl": "Moja mama in oče živita v Celju.", "en": "My mom and father live in Celje.", "difficulty": 1, "vocab_ids": ["mama", "oče"]},
-        {"sl": "Imam brata in sestro.", "en": "I have a brother and a sister.", "difficulty": 1, "vocab_ids": ["brat", "sestra"]},
-        {"sl": "Babica in dedek sta prišla na obisk.", "en": "Grandmother and grandfather came to visit.", "difficulty": 2, "vocab_ids": ["babica", "dedek"]},
-        {"sl": "Moja hči in sin hodita v šolo.", "en": "My daughter and son go to school.", "difficulty": 2, "vocab_ids": ["hči", "sin"]}
+        {"sl": "Teta Ana in stric Jože sta prišla.", "en": "Aunt Ana and Uncle Jože came.", "difficulty": 1, "vocab_ids": ["teta", "stric"]},
+        {"sl": "Moj bratranec in sestrična živita skupaj.", "en": "My male cousin and female cousin live together.", "difficulty": 2, "vocab_ids": ["bratranec", "sestrična"]}
       ]
     },
     {
-      "id": "zivali",
+      "id": "zivali_1",
+      "parent": "zivali",
       "name_sl": "Živali",
       "name_en": "Animals",
-      "order": 6,
+      "subunit": 1,
+      "subunit_name": "Pets",
+      "order": 16,
       "vocab": [
         {"sl": "pes", "en": "dog", "gender": "m", "phonetic": "pehs", "example": "Naš pes se imenuje Rex.", "example_en": "Our dog is named Rex."},
         {"sl": "mačka", "en": "cat", "gender": "f", "phonetic": "MAHCH-kah", "example": "Mačka spi na kavču.", "example_en": "The cat sleeps on the couch."},
         {"sl": "ptica", "en": "bird", "gender": "f", "phonetic": "PTEE-tsah", "example": "Ptica poje v drevesu.", "example_en": "The bird sings in the tree."},
-        {"sl": "konj", "en": "horse", "gender": "m", "phonetic": "kohn-y", "example": "Konj teče po polju.", "example_en": "The horse runs across the field."},
-        {"sl": "krava", "en": "cow", "gender": "f", "phonetic": "KRAH-vah", "example": "Krava daje mleko.", "example_en": "The cow gives milk."},
-        {"sl": "prašič", "en": "pig", "gender": "m", "phonetic": "PRAH-sheech", "example": "Prašič se valja v blatu.", "example_en": "The pig rolls in the mud."},
-        {"sl": "ovca", "en": "sheep", "gender": "f", "phonetic": "OHV-tsah", "example": "Ovca ima belo volno.", "example_en": "The sheep has white wool."},
-        {"sl": "zajec", "en": "rabbit", "gender": "m", "phonetic": "ZAH-yets", "example": "Zajec jé korenje.", "example_en": "The rabbit eats carrots."},
-        {"sl": "miš", "en": "mouse", "gender": "f", "phonetic": "meesh", "example": "Miš se skriva za omaro.", "example_en": "The mouse hides behind the wardrobe."},
-        {"sl": "medved", "en": "bear", "gender": "m", "phonetic": "MEHD-ved", "example": "Medved spi pozimi.", "example_en": "The bear sleeps in winter."},
-        {"sl": "volk", "en": "wolf", "gender": "m", "phonetic": "volk", "example": "Volk zavija ponoči.", "example_en": "The wolf howls at night."},
         {"sl": "riba", "en": "fish", "gender": "f", "phonetic": "REE-bah", "example": "Riba plava v reki.", "example_en": "The fish swims in the river."}
       ],
       "sentences": [
         {"sl": "Imam psa in mačko.", "en": "I have a dog and a cat.", "difficulty": 1, "vocab_ids": ["pes", "mačka"]},
-        {"sl": "Krava daje mleko, ovca pa volno.", "en": "The cow gives milk and the sheep gives wool.", "difficulty": 2, "vocab_ids": ["krava", "ovca"]},
-        {"sl": "Ptica poje, medved pa spi.", "en": "The bird sings and the bear sleeps.", "difficulty": 2, "vocab_ids": ["ptica", "medved"]},
-        {"sl": "Volk in zajec živita v gozdu.", "en": "The wolf and rabbit live in the forest.", "difficulty": 2, "vocab_ids": ["volk", "zajec"]}
+        {"sl": "Ptica poje in riba plava.", "en": "The bird sings and the fish swims.", "difficulty": 1, "vocab_ids": ["ptica", "riba"]}
       ]
     },
     {
-      "id": "telo",
+      "id": "zivali_2",
+      "parent": "zivali",
+      "name_sl": "Živali",
+      "name_en": "Animals",
+      "subunit": 2,
+      "subunit_name": "Farm",
+      "order": 17,
+      "vocab": [
+        {"sl": "konj", "en": "horse", "gender": "m", "phonetic": "kohn-y", "example": "Konj teče po polju.", "example_en": "The horse runs across the field."},
+        {"sl": "krava", "en": "cow", "gender": "f", "phonetic": "KRAH-vah", "example": "Krava daje mleko.", "example_en": "The cow gives milk."},
+        {"sl": "prašič", "en": "pig", "gender": "m", "phonetic": "PRAH-sheech", "example": "Prašič se valja v blatu.", "example_en": "The pig rolls in the mud."},
+        {"sl": "ovca", "en": "sheep", "gender": "f", "phonetic": "OHV-tsah", "example": "Ovca ima belo volno.", "example_en": "The sheep has white wool."}
+      ],
+      "sentences": [
+        {"sl": "Krava daje mleko, ovca pa volno.", "en": "The cow gives milk and the sheep gives wool.", "difficulty": 1, "vocab_ids": ["krava", "ovca"]},
+        {"sl": "Konj teče in prašič se valja v blatu.", "en": "The horse runs and the pig rolls in the mud.", "difficulty": 2, "vocab_ids": ["konj", "prašič"]}
+      ]
+    },
+    {
+      "id": "zivali_3",
+      "parent": "zivali",
+      "name_sl": "Živali",
+      "name_en": "Animals",
+      "subunit": 3,
+      "subunit_name": "Wild",
+      "order": 18,
+      "vocab": [
+        {"sl": "zajec", "en": "rabbit", "gender": "m", "phonetic": "ZAH-yets", "example": "Zajec jé korenje.", "example_en": "The rabbit eats carrots."},
+        {"sl": "miš", "en": "mouse", "gender": "f", "phonetic": "meesh", "example": "Miš se skriva za omaro.", "example_en": "The mouse hides behind the wardrobe."},
+        {"sl": "medved", "en": "bear", "gender": "m", "phonetic": "MEHD-ved", "example": "Medved spi pozimi.", "example_en": "The bear sleeps in winter."},
+        {"sl": "volk", "en": "wolf", "gender": "m", "phonetic": "volk", "example": "Volk zavija ponoči.", "example_en": "The wolf howls at night."}
+      ],
+      "sentences": [
+        {"sl": "Volk in zajec živita v gozdu.", "en": "The wolf and rabbit live in the forest.", "difficulty": 1, "vocab_ids": ["volk", "zajec"]},
+        {"sl": "Medved spi pozimi, miš pa se skriva.", "en": "The bear sleeps in winter and the mouse hides.", "difficulty": 2, "vocab_ids": ["medved", "miš"]}
+      ]
+    },
+    {
+      "id": "telo_1",
+      "parent": "telo",
       "name_sl": "Telo",
       "name_en": "Body",
-      "order": 7,
+      "subunit": 1,
+      "subunit_name": "Head",
+      "order": 19,
       "vocab": [
         {"sl": "glava", "en": "head", "gender": "f", "phonetic": "GLAH-vah", "example": "Boli me glava.", "example_en": "My head hurts."},
         {"sl": "roka", "en": "hand / arm", "gender": "f", "phonetic": "ROH-kah", "example": "Zlomil sem roko.", "example_en": "I broke my arm."},
         {"sl": "noga", "en": "leg / foot", "gender": "f", "phonetic": "NOH-gah", "example": "Noga me boli po teku.", "example_en": "My leg hurts after running."},
-        {"sl": "oko", "en": "eye", "gender": "n", "phonetic": "OH-koh", "example": "Ima modre oči.", "example_en": "She has blue eyes."},
+        {"sl": "oko", "en": "eye", "gender": "n", "phonetic": "OH-koh", "example": "Ima modre oči.", "example_en": "She has blue eyes."}
+      ],
+      "sentences": [
+        {"sl": "Boli me glava in oko.", "en": "My head and eye hurt.", "difficulty": 1, "vocab_ids": ["glava", "oko"]},
+        {"sl": "Imam dolge roke in noge.", "en": "I have long arms and legs.", "difficulty": 1, "vocab_ids": ["roka", "noga"]}
+      ]
+    },
+    {
+      "id": "telo_2",
+      "parent": "telo",
+      "name_sl": "Telo",
+      "name_en": "Body",
+      "subunit": 2,
+      "subunit_name": "Face",
+      "order": 20,
+      "vocab": [
         {"sl": "uho", "en": "ear", "gender": "n", "phonetic": "OO-hoh", "example": "Boli me uho.", "example_en": "My ear hurts."},
         {"sl": "nos", "en": "nose", "gender": "m", "phonetic": "nohs", "example": "Imam zamašen nos.", "example_en": "I have a stuffy nose."},
         {"sl": "usta", "en": "mouth", "gender": "n", "phonetic": "OOS-tah", "example": "Odpri usta prosim.", "example_en": "Please open your mouth."},
-        {"sl": "zob", "en": "tooth", "gender": "m", "phonetic": "zohb", "example": "Boli me zob.", "example_en": "My tooth hurts."},
+        {"sl": "zob", "en": "tooth", "gender": "m", "phonetic": "zohb", "example": "Boli me zob.", "example_en": "My tooth hurts."}
+      ],
+      "sentences": [
+        {"sl": "Boli me nos in uho.", "en": "My nose and ear hurt.", "difficulty": 1, "vocab_ids": ["nos", "uho"]},
+        {"sl": "Odpri usta, boli te zob.", "en": "Open your mouth, your tooth hurts.", "difficulty": 1, "vocab_ids": ["usta", "zob"]}
+      ]
+    },
+    {
+      "id": "telo_3",
+      "parent": "telo",
+      "name_sl": "Telo",
+      "name_en": "Body",
+      "subunit": 3,
+      "subunit_name": "Core",
+      "order": 21,
+      "vocab": [
         {"sl": "prst", "en": "finger", "gender": "m", "phonetic": "purst", "example": "Porezal sem prst.", "example_en": "I cut my finger."},
         {"sl": "koleno", "en": "knee", "gender": "n", "phonetic": "koh-LEH-noh", "example": "Udaril sem se v koleno.", "example_en": "I hit my knee."},
         {"sl": "hrbet", "en": "back", "gender": "m", "phonetic": "HUR-bet", "example": "Boli me hrbet od sedenja.", "example_en": "My back hurts from sitting."},
         {"sl": "srce", "en": "heart", "gender": "n", "phonetic": "SUR-tseh", "example": "Srce bije hitro.", "example_en": "The heart beats fast."}
       ],
       "sentences": [
-        {"sl": "Boli me glava in nos.", "en": "My head and nose hurt.", "difficulty": 1, "vocab_ids": ["glava", "nos"]},
-        {"sl": "Imam modre oči in dolge roke.", "en": "I have blue eyes and long arms.", "difficulty": 2, "vocab_ids": ["oko", "roka"]},
-        {"sl": "Prst in koleno sta poškodovana.", "en": "The finger and knee are injured.", "difficulty": 2, "vocab_ids": ["prst", "koleno"]},
-        {"sl": "Srce bije, ko tečem.", "en": "The heart beats when I run.", "difficulty": 2, "vocab_ids": ["srce"]}
+        {"sl": "Prst in koleno sta poškodovana.", "en": "The finger and knee are injured.", "difficulty": 1, "vocab_ids": ["prst", "koleno"]},
+        {"sl": "Srce bije hitro, hrbet pa me boli.", "en": "The heart beats fast and my back hurts.", "difficulty": 2, "vocab_ids": ["srce", "hrbet"]}
       ]
     },
     {
-      "id": "oblacila",
+      "id": "oblacila_1",
+      "parent": "oblacila",
       "name_sl": "Oblačila",
       "name_en": "Clothing",
-      "order": 8,
+      "subunit": 1,
+      "subunit_name": "Basics",
+      "order": 22,
       "vocab": [
         {"sl": "majica", "en": "t-shirt", "gender": "f", "phonetic": "MAH-yee-tsah", "example": "Oblekla sem belo majico.", "example_en": "I put on a white t-shirt."},
         {"sl": "hlače", "en": "pants", "gender": "f", "phonetic": "HLAH-cheh", "example": "Te hlače so mi premajhne.", "example_en": "These pants are too small for me."},
         {"sl": "čevlji", "en": "shoes", "gender": "m", "phonetic": "CHEV-lyee", "example": "Kupil sem nove čevlje.", "example_en": "I bought new shoes."},
-        {"sl": "nogavice", "en": "socks", "gender": "f", "phonetic": "noh-gah-VEE-tseh", "example": "Kje so moje nogavice?", "example_en": "Where are my socks?"},
+        {"sl": "nogavice", "en": "socks", "gender": "f", "phonetic": "noh-gah-VEE-tseh", "example": "Kje so moje nogavice?", "example_en": "Where are my socks?"}
+      ],
+      "sentences": [
+        {"sl": "Oblekla sem majico in hlače.", "en": "I put on a t-shirt and pants.", "difficulty": 1, "vocab_ids": ["majica", "hlače"]},
+        {"sl": "Kje so moji čevlji in nogavice?", "en": "Where are my shoes and socks?", "difficulty": 1, "vocab_ids": ["čevlji", "nogavice"]}
+      ]
+    },
+    {
+      "id": "oblacila_2",
+      "parent": "oblacila",
+      "name_sl": "Oblačila",
+      "name_en": "Clothing",
+      "subunit": 2,
+      "subunit_name": "Outerwear",
+      "order": 23,
+      "vocab": [
         {"sl": "jakna", "en": "jacket", "gender": "f", "phonetic": "YAHK-nah", "example": "Vzemi jakno, zunaj je mrzlo.", "example_en": "Take a jacket, it is cold outside."},
         {"sl": "klobuk", "en": "hat", "gender": "m", "phonetic": "KLOH-book", "example": "Nosi slamnati klobuk.", "example_en": "He wears a straw hat."},
         {"sl": "šal", "en": "scarf", "gender": "m", "phonetic": "shahl", "example": "Ovila si je šal okrog vratu.", "example_en": "She wrapped a scarf around her neck."},
-        {"sl": "rokavice", "en": "gloves", "gender": "f", "phonetic": "roh-kah-VEE-tseh", "example": "Pozimi nosim rokavice.", "example_en": "In winter I wear gloves."},
+        {"sl": "rokavice", "en": "gloves", "gender": "f", "phonetic": "roh-kah-VEE-tseh", "example": "Pozimi nosim rokavice.", "example_en": "In winter I wear gloves."}
+      ],
+      "sentences": [
+        {"sl": "Vzemi jakno, šal in rokavice.", "en": "Take a jacket, scarf and gloves.", "difficulty": 1, "vocab_ids": ["jakna", "šal", "rokavice"]},
+        {"sl": "Nosi slamnati klobuk in jakno.", "en": "He wears a straw hat and a jacket.", "difficulty": 1, "vocab_ids": ["klobuk", "jakna"]}
+      ]
+    },
+    {
+      "id": "oblacila_3",
+      "parent": "oblacila",
+      "name_sl": "Oblačila",
+      "name_en": "Clothing",
+      "subunit": 3,
+      "subunit_name": "Formal",
+      "order": 24,
+      "vocab": [
         {"sl": "obleka", "en": "dress", "gender": "f", "phonetic": "oh-BLEH-kah", "example": "Oblekla je lepo obleko.", "example_en": "She put on a beautiful dress."},
         {"sl": "krilo", "en": "skirt", "gender": "n", "phonetic": "KREE-loh", "example": "Ima dolgo krilo.", "example_en": "She has a long skirt."},
         {"sl": "srajca", "en": "shirt", "gender": "f", "phonetic": "SRAHY-tsah", "example": "Bela srajca je formalna obleka.", "example_en": "A white shirt is formal wear."},
         {"sl": "pas", "en": "belt", "gender": "m", "phonetic": "pahs", "example": "Pozabil sem pas doma.", "example_en": "I forgot my belt at home."}
       ],
       "sentences": [
-        {"sl": "Oblekla sem majico in hlače.", "en": "I put on a t-shirt and pants.", "difficulty": 1, "vocab_ids": ["majica", "hlače"]},
-        {"sl": "Kje so moji čevlji in nogavice?", "en": "Where are my shoes and socks?", "difficulty": 1, "vocab_ids": ["čevlji", "nogavice"]},
-        {"sl": "Vzemi jakno, šal in rokavice.", "en": "Take a jacket, scarf and gloves.", "difficulty": 2, "vocab_ids": ["jakna", "šal", "rokavice"]},
-        {"sl": "Ima lepo obleko in klobuk.", "en": "She has a beautiful dress and hat.", "difficulty": 2, "vocab_ids": ["obleka", "klobuk"]}
+        {"sl": "Ima lepo obleko in klobuk.", "en": "She has a beautiful dress and hat.", "difficulty": 1, "vocab_ids": ["obleka"]},
+        {"sl": "Bela srajca, krilo in pas so formalna oblačila.", "en": "A white shirt, skirt and belt are formal wear.", "difficulty": 2, "vocab_ids": ["srajca", "krilo", "pas"]}
       ]
     },
     {
-      "id": "hisa",
+      "id": "hisa_1",
+      "parent": "hisa",
       "name_sl": "Hiša",
       "name_en": "House",
-      "order": 9,
+      "subunit": 1,
+      "subunit_name": "Rooms",
+      "order": 25,
       "vocab": [
         {"sl": "kuhinja", "en": "kitchen", "gender": "f", "phonetic": "koo-HEE-nyah", "example": "Mama kuha v kuhinji.", "example_en": "Mom cooks in the kitchen."},
         {"sl": "soba", "en": "room", "gender": "f", "phonetic": "SOH-bah", "example": "Moja soba je na prvem nadstropju.", "example_en": "My room is on the first floor."},
         {"sl": "kopalnica", "en": "bathroom", "gender": "f", "phonetic": "koh-pahl-NEE-tsah", "example": "Kopalnica je poleg spalnice.", "example_en": "The bathroom is next to the bedroom."},
-        {"sl": "miza", "en": "table", "gender": "f", "phonetic": "MEE-zah", "example": "Knjiga leži na mizi.", "example_en": "The book lies on the table."},
+        {"sl": "miza", "en": "table", "gender": "f", "phonetic": "MEE-zah", "example": "Knjiga leži na mizi.", "example_en": "The book lies on the table."}
+      ],
+      "sentences": [
+        {"sl": "Mama kuha v kuhinji.", "en": "Mom cooks in the kitchen.", "difficulty": 1, "vocab_ids": ["kuhinja"]},
+        {"sl": "Moja soba je poleg kopalnice.", "en": "My room is next to the bathroom.", "difficulty": 1, "vocab_ids": ["soba", "kopalnica"]}
+      ]
+    },
+    {
+      "id": "hisa_2",
+      "parent": "hisa",
+      "name_sl": "Hiša",
+      "name_en": "House",
+      "subunit": 2,
+      "subunit_name": "Furniture",
+      "order": 26,
+      "vocab": [
         {"sl": "stol", "en": "chair", "gender": "m", "phonetic": "stohl", "example": "Prosim, sedi na stol.", "example_en": "Please, sit on the chair."},
         {"sl": "postelja", "en": "bed", "gender": "f", "phonetic": "poh-STEHL-yah", "example": "Grem spat v posteljo.", "example_en": "I'm going to bed."},
         {"sl": "okno", "en": "window", "gender": "n", "phonetic": "OHK-noh", "example": "Odpri okno, vroče je.", "example_en": "Open the window, it is hot."},
-        {"sl": "vrata", "en": "door", "gender": "n", "phonetic": "VRAH-tah", "example": "Zapri vrata za seboj.", "example_en": "Close the door behind you."},
+        {"sl": "vrata", "en": "door", "gender": "n", "phonetic": "VRAH-tah", "example": "Zapri vrata za seboj.", "example_en": "Close the door behind you."}
+      ],
+      "sentences": [
+        {"sl": "Sedi na stol pri mizi.", "en": "Sit on the chair at the table.", "difficulty": 1, "vocab_ids": ["stol"]},
+        {"sl": "Odpri vrata in okno.", "en": "Open the door and the window.", "difficulty": 1, "vocab_ids": ["vrata", "okno"]}
+      ]
+    },
+    {
+      "id": "hisa_3",
+      "parent": "hisa",
+      "name_sl": "Hiša",
+      "name_en": "House",
+      "subunit": 3,
+      "subunit_name": "Outside",
+      "order": 27,
+      "vocab": [
         {"sl": "streha", "en": "roof", "gender": "f", "phonetic": "STREH-hah", "example": "Streha hiše je rdeča.", "example_en": "The roof of the house is red."},
         {"sl": "stopnice", "en": "stairs", "gender": "f", "phonetic": "stop-NEE-tseh", "example": "Previdno na stopnicah.", "example_en": "Be careful on the stairs."},
         {"sl": "vrt", "en": "garden", "gender": "m", "phonetic": "vurt", "example": "V vrtu rastejo rože.", "example_en": "Flowers grow in the garden."},
         {"sl": "ključ", "en": "key", "gender": "m", "phonetic": "klyooch", "example": "Izgubil sem ključ od hiše.", "example_en": "I lost the key to the house."}
       ],
       "sentences": [
-        {"sl": "Mama kuha v kuhinji.", "en": "Mom cooks in the kitchen.", "difficulty": 1, "vocab_ids": ["kuhinja"]},
-        {"sl": "Sedi na stol pri mizi.", "en": "Sit on the chair at the table.", "difficulty": 1, "vocab_ids": ["stol", "miza"]},
-        {"sl": "Odpri vrata in okno.", "en": "Open the door and the window.", "difficulty": 1, "vocab_ids": ["vrata", "okno"]},
-        {"sl": "Ključ je na mizi v sobi.", "en": "The key is on the table in the room.", "difficulty": 2, "vocab_ids": ["ključ", "miza", "soba"]},
-        {"sl": "V vrtu je lepa postelja rož.", "en": "There is a beautiful flower bed in the garden.", "difficulty": 2, "vocab_ids": ["vrt"]}
+        {"sl": "Ključ je na mizi v sobi.", "en": "The key is on the table in the room.", "difficulty": 1, "vocab_ids": ["ključ"]},
+        {"sl": "Streha je rdeča in vrt je lep.", "en": "The roof is red and the garden is beautiful.", "difficulty": 1, "vocab_ids": ["streha", "vrt"]}
       ]
     },
     {
-      "id": "cas",
+      "id": "cas_1",
+      "parent": "cas",
       "name_sl": "Čas",
       "name_en": "Time",
-      "order": 10,
+      "subunit": 1,
+      "subunit_name": "Days",
+      "order": 28,
       "vocab": [
         {"sl": "danes", "en": "today", "gender": null, "phonetic": "DAH-nes", "example": "Danes je lep dan.", "example_en": "Today is a beautiful day."},
         {"sl": "jutri", "en": "tomorrow", "gender": null, "phonetic": "YOO-tree", "example": "Jutri grem k zdravniku.", "example_en": "Tomorrow I go to the doctor."},
         {"sl": "včeraj", "en": "yesterday", "gender": null, "phonetic": "VCHEH-rahy", "example": "Včeraj sem bil bolan.", "example_en": "Yesterday I was sick."},
-        {"sl": "ura", "en": "hour / clock", "gender": "f", "phonetic": "OO-rah", "example": "Koliko je ura?", "example_en": "What time is it?"},
+        {"sl": "ura", "en": "hour / clock", "gender": "f", "phonetic": "OO-rah", "example": "Koliko je ura?", "example_en": "What time is it?"}
+      ],
+      "sentences": [
+        {"sl": "Danes je lep dan, jutri bo dež.", "en": "Today is a beautiful day, tomorrow it will rain.", "difficulty": 1, "vocab_ids": ["danes", "jutri"]},
+        {"sl": "Včeraj sem prišel pozno, koliko je ura?", "en": "Yesterday I came late, what time is it?", "difficulty": 1, "vocab_ids": ["včeraj", "ura"]}
+      ]
+    },
+    {
+      "id": "cas_2",
+      "parent": "cas",
+      "name_sl": "Čas",
+      "name_en": "Time",
+      "subunit": 2,
+      "subunit_name": "Periods",
+      "order": 29,
+      "vocab": [
         {"sl": "minuta", "en": "minute", "gender": "f", "phonetic": "mee-NOO-tah", "example": "Počakaj eno minuto.", "example_en": "Wait one minute."},
         {"sl": "teden", "en": "week", "gender": "m", "phonetic": "TEH-den", "example": "Naslednji teden grem na dopust.", "example_en": "Next week I go on vacation."},
         {"sl": "mesec", "en": "month", "gender": "m", "phonetic": "MEH-sets", "example": "Mesec dni sem bil v tujini.", "example_en": "I was abroad for a month."},
-        {"sl": "leto", "en": "year", "gender": "n", "phonetic": "LEH-toh", "example": "Letos je bilo vroče poletje.", "example_en": "This year was a hot summer."},
+        {"sl": "leto", "en": "year", "gender": "n", "phonetic": "LEH-toh", "example": "Letos je bilo vroče poletje.", "example_en": "This year was a hot summer."}
+      ],
+      "sentences": [
+        {"sl": "Zdaj nimam časa, počakaj minuto.", "en": "I don't have time now, wait a minute.", "difficulty": 1, "vocab_ids": ["minuta"]},
+        {"sl": "Naslednji teden, mesec ali leto?", "en": "Next week, month or year?", "difficulty": 1, "vocab_ids": ["teden", "mesec", "leto"]}
+      ]
+    },
+    {
+      "id": "cas_3",
+      "parent": "cas",
+      "name_sl": "Čas",
+      "name_en": "Time",
+      "subunit": 3,
+      "subunit_name": "Times of Day",
+      "order": 30,
+      "vocab": [
         {"sl": "zjutraj", "en": "in the morning", "gender": null, "phonetic": "ZYOO-trahy", "example": "Zjutraj pijem kavo.", "example_en": "In the morning I drink coffee."},
         {"sl": "zvečer", "en": "in the evening", "gender": null, "phonetic": "ZVEH-cher", "example": "Zvečer gledam televizijo.", "example_en": "In the evening I watch television."},
         {"sl": "zdaj", "en": "now", "gender": null, "phonetic": "zdahy", "example": "Zdaj moram iti.", "example_en": "Now I have to go."},
         {"sl": "pozno", "en": "late", "gender": null, "phonetic": "POH-znoh", "example": "Prišel si prepozno.", "example_en": "You came too late."}
       ],
       "sentences": [
-        {"sl": "Danes je lep dan, jutri bo dež.", "en": "Today is a beautiful day, tomorrow it will rain.", "difficulty": 1, "vocab_ids": ["danes", "jutri"]},
-        {"sl": "Koliko je ura? Ura je deset.", "en": "What time is it? It is ten o'clock.", "difficulty": 1, "vocab_ids": ["ura"]},
-        {"sl": "Zjutraj pijem kavo, zvečer pa čaj.", "en": "In the morning I drink coffee, in the evening tea.", "difficulty": 2, "vocab_ids": ["zjutraj", "zvečer"]},
-        {"sl": "Včeraj sem prišel pozno domov.", "en": "Yesterday I came home late.", "difficulty": 2, "vocab_ids": ["včeraj", "pozno"]},
-        {"sl": "Zdaj nimam časa, počakaj minuto.", "en": "I don't have time now, wait a minute.", "difficulty": 2, "vocab_ids": ["zdaj", "minuta"]}
+        {"sl": "Zjutraj pijem kavo, zvečer pa čaj.", "en": "In the morning I drink coffee, in the evening tea.", "difficulty": 1, "vocab_ids": ["zjutraj", "zvečer"]},
+        {"sl": "Zdaj moram iti, je prepozno.", "en": "Now I have to go, it is too late.", "difficulty": 1, "vocab_ids": ["zdaj", "pozno"]}
       ]
     }
   ]

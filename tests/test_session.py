@@ -22,32 +22,31 @@ def builder(loader, progress):
     return SessionBuilder(loader, progress)
 
 
-def test_build_session_returns_10_exercises(builder):
-    exercises = builder.build("pozdravi")
-    assert len(exercises) == 12  # min(SESSION_SIZE=20, vocab_count=12)
+def test_build_session_returns_exercises(builder):
+    exercises = builder.build("pozdravi_1")
+    assert len(exercises) == 4  # 4 vocab items per subunit
 
 
 def test_session_has_mixed_types(builder):
-    exercises = builder.build("pozdravi")
+    exercises = builder.build("pozdravi_1")
     types = {ex.exercise_type for ex in exercises}
-    assert len(types) >= 3  # at least 3 different exercise types
+    assert len(types) >= 2  # at least 2 different exercise types with 4 items
 
 
 def test_no_two_same_types_in_a_row(builder):
-    exercises = builder.build("pozdravi")
+    exercises = builder.build("pozdravi_1")
     for i in range(1, len(exercises)):
         assert exercises[i].exercise_type != exercises[i - 1].exercise_type
 
 
 def test_due_words_prioritized(builder, progress):
-    # Mark a word as due (box 1)
     state = WordState(word="hvala", box=1, last_reviewed=datetime.now() - timedelta(days=1))
     progress.update_word_state(state)
-    exercises = builder.build("pozdravi")
+    exercises = builder.build("pozdravi_1")
     exercise_words = [ex.word_sl for ex in exercises]
     assert "hvala" in exercise_words
 
 
 def test_builds_for_any_unit(builder):
-    exercises = builder.build("stevila")
-    assert len(exercises) == 12  # min(SESSION_SIZE=20, vocab_count=12)
+    exercises = builder.build("stevila_1")
+    assert len(exercises) == 4
