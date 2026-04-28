@@ -1,8 +1,14 @@
+from pathlib import Path
+
 from kivy.uix.screenmanager import Screen
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+from kivy.uix.image import Image
+
+ASSETS_DIR = Path(__file__).parent.parent / "assets"
 from kivy.app import App
 from kivy.metrics import dp
 from kivy.graphics import Color, Rectangle, RoundedRectangle, Ellipse
@@ -33,45 +39,44 @@ UNIT_COLORS = {
     "cas":       (0.34, 0.48, 0.46, 1),   # teal
 }
 
-UNIT_SYMBOLS = {
-    "pozdravi":  "Hi",
-    "stevila":   "#",
-    "barve":     "\u25cf",   # ●
-    "hrana":     "\u2663",   # ♣ (leaf-like)
-    "druzina":   "\u2661",   # ♡
-    "zivali":    "\u2618",   # ☘
-    "telo":      "\u2606",   # ☆
-    "oblacila":  "\u2302",   # ⌂
-    "hisa":      "\u2302",   # ⌂
-    "cas":       "\u25f4",   # ◴
-}
 
 
-class UnitBadge(BoxLayout):
-    """Colored circle with a symbol inside."""
+class UnitBadge(FloatLayout):
+    """Rounded square badge with a pictogram icon, tinted by unit color."""
     def __init__(self, unit_id, locked=False, **kwargs):
         super().__init__(**kwargs)
         self.size_hint = (None, None)
-        self.size = (dp(40), dp(40))
+        self.size = (dp(44), dp(44))
 
         color = UNIT_COLORS.get(unit_id, PRIMARY)
+        tint = (color[0] * 0.15 + 0.85, color[1] * 0.15 + 0.85, color[2] * 0.15 + 0.85, 1)
+        border_color = color if not locked else (0.78, 0.76, 0.73, 1)
         if locked:
-            color = (0.78, 0.76, 0.73, 1)
+            tint = (0.93, 0.92, 0.91, 1)
 
         with self.canvas.before:
-            Color(*color)
-            self._circle = Ellipse(pos=self.pos, size=self.size)
+            Color(*border_color)
+            self._border = RoundedRectangle(pos=self.pos, size=self.size, radius=[dp(10)])
+            Color(*tint)
+            self._inner = RoundedRectangle(
+                pos=(self.x + dp(1.5), self.y + dp(1.5)),
+                size=(self.width - dp(3), self.height - dp(3)),
+                radius=[dp(9)])
         self.bind(pos=self._update, size=self._update)
 
-        sym = UNIT_SYMBOLS.get(unit_id, "?")
-        lbl = Label(text=sym, font_size="16sp", bold=True, color=(1, 1, 1, 1),
-                    halign="center", valign="middle")
-        lbl.bind(size=lbl.setter("text_size"))
-        self.add_widget(lbl)
+        icon_path = ASSETS_DIR / f"icon_{unit_id}.png"
+        if icon_path.exists():
+            img = Image(source=str(icon_path), size_hint=(None, None),
+                        width=dp(30), height=dp(30),
+                        pos_hint={"center_x": 0.5, "center_y": 0.5},
+                        opacity=0.35 if locked else 0.85)
+            self.add_widget(img)
 
     def _update(self, *a):
-        self._circle.pos = self.pos
-        self._circle.size = self.size
+        self._border.pos = self.pos
+        self._border.size = self.size
+        self._inner.pos = (self.x + 1.5, self.y + 1.5)
+        self._inner.size = (self.width - 3, self.height - 3)
 
 
 class LessonCard(BoxLayout):

@@ -94,4 +94,13 @@ class ResultsScreen(Screen):
         self.manager.current = "exercise"
 
     def _continue(self, *args):
-        self.manager.current = "lesson_select"
+        # Go to next subunit if available
+        app = App.get_running_app()
+        units = app.curriculum.get_units()
+        current_idx = next((i for i, u in enumerate(units) if u["id"] == self.unit_id), -1)
+        if current_idx >= 0 and current_idx + 1 < len(units):
+            next_unit = units[current_idx + 1]
+            self.manager.get_screen("exercise").unit_id = next_unit["id"]
+            self.manager.current = "exercise"
+        else:
+            self.manager.current = "lesson_select"

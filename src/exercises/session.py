@@ -10,6 +10,7 @@ from exercises.typing_ex import TypingExercise
 from services.curriculum import CurriculumLoader
 from services.progress import ProgressManager
 from services.srs import SRSEngine, WordState
+from services.audio import get_audio_path
 
 SESSION_SIZE = 20
 
@@ -66,9 +67,16 @@ class SessionBuilder:
                 selected.append(item)
                 seen_words.add(item["sl"])
 
-        # Build exercises with mixed types, no two same in a row
-        all_vocab_words = [v["en"] for v in vocab]
-        all_sl_words = [v["sl"] for v in vocab]
+        # Build exercises — pull distractors from full parent unit for variety
+        units = self._curriculum.get_units()
+        current_unit = next((u for u in units if u["id"] == unit_id), None)
+        parent_id = current_unit.get("parent", unit_id) if current_unit else unit_id
+        sibling_units = [u for u in units if u.get("parent", u["id"]) == parent_id]
+        all_parent_vocab = []
+        for su in sibling_units:
+            all_parent_vocab.extend(self._curriculum.get_vocab(su["id"]))
+        all_vocab_words = list({v["en"] for v in all_parent_vocab})
+        all_sl_words = list({v["sl"] for v in all_parent_vocab})
         exercise_types = [
             ExerciseType.FLASHCARD,
             ExerciseType.MULTIPLE_CHOICE,
@@ -83,10 +91,14 @@ class SessionBuilder:
         for item in selected:
             available = [t for t in exercise_types if t != last_type]
 
-            # Sentence building needs a sentence — only use if we have one
+            # Sentence building needs a sentence
             item_sentences = [s for s in sentences if item["sl"] in s.get("vocab_ids", [])]
             if not item_sentences:
                 available = [t for t in available if t != ExerciseType.SENTENCE_BUILDING]
+
+            # Listening needs audio
+            if not get_audio_path(item["sl"]):
+                available = [t for t in available if t != ExerciseType.LISTENING]
 
             chosen_type = random.choice(available)
             ex = self._create_exercise(chosen_type, item, all_vocab_words, all_sl_words, item_sentences)

@@ -51,10 +51,21 @@ def _make_choice_btn(text):
                  background_normal="", background_down="",
                  background_color=(0, 0, 0, 0), color=TEXT_DARK)
     with btn.canvas.before:
+        # Border
+        Color(0.82, 0.80, 0.77, 1)
+        _border = RoundedRectangle(pos=btn.pos, size=btn.size, radius=[dp(8)])
+        # Fill
         Color(*CHOICE_BG)
-        _r = RoundedRectangle(pos=btn.pos, size=btn.size, radius=[dp(8)])
-    btn.bind(pos=lambda i, *a, r=_r: setattr(r, "pos", i.pos),
-             size=lambda i, *a, r=_r: setattr(r, "size", i.size))
+        _r = RoundedRectangle(
+            pos=(btn.x + 1, btn.y + 1),
+            size=(btn.width - 2, btn.height - 2),
+            radius=[dp(7)])
+    def _upd(i, *a):
+        _border.pos = i.pos
+        _border.size = i.size
+        _r.pos = (i.x + 1, i.y + 1)
+        _r.size = (i.width - 2, i.height - 2)
+    btn.bind(pos=_upd, size=_upd)
     return btn
 
 
@@ -141,10 +152,19 @@ class ExerciseScreen(Screen):
         self.add_widget(root)
 
     def _render_flashcard(self, root, ex):
-        root.add_widget(Label(text="Flashcard", font_size="12sp", color=TEXT_LIGHT,
-                              size_hint_y=None, height=dp(20)))
+        root.add_widget(Label(text="Flashcard — do you know this word?", font_size="12sp",
+                              color=TEXT_LIGHT, size_hint_y=None, height=dp(20)))
         root.add_widget(BoxLayout(size_hint_y=0.05))
         root.add_widget(Label(text=ex.word_sl, font_size="30sp", bold=True, color=TEXT_DARK))
+
+        # Show phonetic
+        app = App.get_running_app()
+        vocab = app.curriculum.get_vocab(self.unit_id)
+        item = next((v for v in vocab if v["sl"] == ex.word_sl), None)
+        if item and item.get("phonetic"):
+            root.add_widget(Label(text=f"[{item['phonetic']}]", font_size="14sp",
+                                  color=TEXT_LIGHT, size_hint_y=None, height=dp(22)))
+
         self._flash_answer = Label(text="tap to reveal", font_size="22sp", color=TEXT_LIGHT)
         root.add_widget(self._flash_answer)
 
@@ -175,6 +195,8 @@ class ExerciseScreen(Screen):
         self._show_current()
 
     def _render_multiple_choice(self, root, ex):
+        root.add_widget(Label(text="Choose the correct translation", font_size="12sp",
+                              color=TEXT_LIGHT, size_hint_y=None, height=dp(20)))
         p = Label(text=ex.prompt, font_size="20sp", color=TEXT_DARK,
                   size_hint_y=None, height=dp(70), halign="center", valign="center")
         p.bind(size=p.setter("text_size"))
@@ -195,6 +217,8 @@ class ExerciseScreen(Screen):
         self._show_feedback(root, ex.check_answer(selected), ex.correct_answer, ex)
 
     def _render_sentence_building(self, root, ex):
+        root.add_widget(Label(text="Tap words in the correct order", font_size="12sp",
+                              color=TEXT_LIGHT, size_hint_y=None, height=dp(20)))
         p = Label(text=ex.prompt, font_size="18sp", color=TEXT_DARK,
                   size_hint_y=None, height=dp(50), halign="center")
         p.bind(size=p.setter("text_size"))
@@ -265,6 +289,8 @@ class ExerciseScreen(Screen):
             root.add_widget(BoxLayout(size_hint_y=None, height=dp(4)))
 
     def _render_typing(self, root, ex):
+        root.add_widget(Label(text="Type your answer", font_size="12sp",
+                              color=TEXT_LIGHT, size_hint_y=None, height=dp(20)))
         p = Label(text=ex.prompt, font_size="20sp", color=TEXT_DARK,
                   size_hint_y=None, height=dp(50), halign="center")
         p.bind(size=p.setter("text_size"))
@@ -292,15 +318,54 @@ class ExerciseScreen(Screen):
         self.clear_widgets()
         fb = self._make_root()
 
-        fb.add_widget(BoxLayout(size_hint_y=0.2))
+        fb.add_widget(BoxLayout(size_hint_y=0.1))
 
         if correct:
             self._score += 1
-            fb.add_widget(Label(text="Correct", font_size="28sp", bold=True, color=CORRECT))
+            fb.add_widget(Label(text="Correct!", font_size="28sp", bold=True, color=CORRECT,
+                                size_hint_y=None, height=dp(40)))
         else:
-            fb.add_widget(Label(text="Incorrect", font_size="28sp", bold=True, color=ERROR))
+            fb.add_widget(Label(text="Not quite", font_size="28sp", bold=True, color=ERROR,
+                                size_hint_y=None, height=dp(40)))
             fb.add_widget(Label(text=f"Answer: {correct_answer}", font_size="18sp",
-                                color=TEXT_MID, size_hint_y=None, height=dp(36)))
+                                color=TEXT_MID, size_hint_y=None, height=dp(30)))
+
+        fb.add_widget(BoxLayout(size_hint_y=None, height=dp(16)))
+
+        # Reinforcement: show the word, translation, phonetic
+        app = App.get_running_app()
+        vocab = app.curriculum.get_vocab(self.unit_id)
+        item = next((v for v in vocab if v["sl"] == ex.word_sl), None)
+        if item:
+            # Word card
+            card = BoxLayout(orientation="vertical", size_hint_y=None, height=dp(90),
+                             padding=dp(14), spacing=dp(4))
+            with card.canvas.before:
+                Color(0, 0, 0, 0.03)
+                _cs = RoundedRectangle(pos=card.pos, size=card.size, radius=[dp(8)])
+                Color(1, 1, 1, 1)
+                _cb = RoundedRectangle(pos=card.pos, size=card.size, radius=[dp(8)])
+            card.bind(pos=lambda i, *a: (setattr(_cb, "pos", i.pos), setattr(_cs, "pos", (i.x+1, i.y-1))),
+                      size=lambda i, *a: (setattr(_cb, "size", i.size), setattr(_cs, "size", i.size)))
+
+            w = Label(text=item["sl"], font_size="22sp", bold=True, color=TEXT_DARK,
+                      size_hint_y=None, height=dp(28), halign="center")
+            w.bind(size=w.setter("text_size"))
+            card.add_widget(w)
+            t = Label(text=item["en"], font_size="16sp", color=TEXT_MID,
+                      size_hint_y=None, height=dp(22), halign="center")
+            t.bind(size=t.setter("text_size"))
+            card.add_widget(t)
+            ph = Label(text=f"[{item.get('phonetic', '')}]", font_size="13sp", color=TEXT_LIGHT,
+                       size_hint_y=None, height=dp(18), halign="center")
+            ph.bind(size=ph.setter("text_size"))
+            card.add_widget(ph)
+            fb.add_widget(card)
+
+            # Play audio button
+            audio_btn = _make_btn("Listen", ACCENT, dp(36), "13sp")
+            audio_btn.bind(on_release=lambda *a: play_audio(ex.word_sl))
+            fb.add_widget(audio_btn)
 
         self._update_srs(ex, correct)
         fb.add_widget(BoxLayout())
@@ -308,7 +373,7 @@ class ExerciseScreen(Screen):
         nxt = _make_btn("Next", PRIMARY, dp(50), "17sp")
         nxt.bind(on_release=lambda *a: self._next())
         fb.add_widget(nxt)
-        fb.add_widget(BoxLayout(size_hint_y=None, height=dp(20)))
+        fb.add_widget(BoxLayout(size_hint_y=None, height=dp(16)))
         self.add_widget(fb)
 
     def _update_srs(self, ex, correct):
