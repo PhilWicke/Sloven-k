@@ -1,11 +1,16 @@
+from pathlib import Path
+
 from kivy.uix.screenmanager import Screen
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+from kivy.uix.image import Image
 from kivy.app import App
 from kivy.metrics import dp
 from kivy.graphics import Color, RoundedRectangle
+
+ASSETS_DIR = Path(__file__).parent.parent / "assets"
 
 
 class LessonCard(BoxLayout):
@@ -14,26 +19,43 @@ class LessonCard(BoxLayout):
         self.orientation = "horizontal"
         self.size_hint_y = None
         self.height = dp(80)
-        self.padding = dp(15)
-        self.spacing = dp(10)
+        self.padding = dp(12)
+        self.spacing = dp(12)
 
-        # Background
+        # Background with shadow
         with self.canvas.before:
+            # Shadow
+            Color(0, 0, 0, 0.05)
+            self._shadow = RoundedRectangle(pos=(self.x + dp(1), self.y - dp(2)), size=self.size, radius=[dp(12)])
+            # Card
             if locked:
-                Color(0.85, 0.85, 0.85, 1)
+                Color(0.92, 0.92, 0.92, 1)
             elif status == "completed":
-                Color(0.9, 1, 0.9, 1)
+                Color(0.92, 0.98, 0.88, 1)
             else:
                 Color(1, 1, 1, 1)
-            self._bg = RoundedRectangle(pos=self.pos, size=self.size, radius=[10])
+            self._bg = RoundedRectangle(pos=self.pos, size=self.size, radius=[dp(12)])
         self.bind(pos=self._update_bg, size=self._update_bg)
+
+        # Unit icon
+        icon_path = ASSETS_DIR / f"icon_{unit['id']}.png"
+        if icon_path.exists():
+            icon = Image(
+                source=str(icon_path),
+                size_hint=(None, None),
+                width=dp(50),
+                height=dp(50),
+                pos_hint={"center_y": 0.5},
+            )
+            self.add_widget(icon)
 
         # Text info
         text_box = BoxLayout(orientation="vertical", spacing=dp(2))
         name_label = Label(
             text=f"{unit['name_sl']} / {unit['name_en']}",
-            font_size="18sp",
-            color=(0.5, 0.5, 0.5, 1) if locked else (0.2, 0.2, 0.2, 1),
+            font_size="17sp",
+            bold=True,
+            color=(0.6, 0.6, 0.6, 1) if locked else (0.15, 0.15, 0.15, 1),
             halign="left",
             valign="center",
             size_hint_x=1,
@@ -74,6 +96,8 @@ class LessonCard(BoxLayout):
     def _update_bg(self, *args):
         self._bg.pos = self.pos
         self._bg.size = self.size
+        self._shadow.pos = (self.x + 1, self.y - 2)
+        self._shadow.size = self.size
 
 
 class LessonSelectScreen(Screen):

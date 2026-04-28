@@ -93,13 +93,16 @@ def main():
             print(f"  Skipping (exists): {icon_path}")
             continue
         print(f"Generating icon for {unit_id}...")
-        icon_bytes = generate_image(client, prompt)
-        icon_path.write_bytes(icon_bytes)
-        print(f"  Saved: {icon_path}")
+        try:
+            icon_bytes = generate_image(client, prompt)
+            icon_path.write_bytes(icon_bytes)
+            print(f"  Saved: {icon_path}")
+        except Exception as e:
+            print(f"  ERROR for {unit_id}: {e}")
 
     # Generate Kivy theme
     theme_path = THEME_DIR / "style.kv"
-    if not theme_path.exists():
+    if True:  # always regenerate theme
         print("Generating Kivy theme...")
         theme_content = generate_text(client, THEME_PROMPT)
         # Strip markdown code fences if present

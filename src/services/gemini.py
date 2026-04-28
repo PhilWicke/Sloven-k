@@ -13,7 +13,7 @@ def get_client() -> genai.Client:
 def generate_image(client: genai.Client, prompt: str) -> bytes:
     """Generate an image using Gemini's image generation and return PNG bytes."""
     response = client.models.generate_images(
-        model="imagen-3.0-generate-002",
+        model="imagen-4.0-generate-001",
         prompt=prompt,
         config=types.GenerateImagesConfig(number_of_images=1),
     )
