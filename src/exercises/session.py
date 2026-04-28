@@ -27,6 +27,13 @@ class SessionBuilder:
         self._srs = SRSEngine()
 
     def build(self, unit_id: str) -> list:
+        units = self._curriculum.get_units()
+        current_unit = next((u for u in units if u["id"] == unit_id), None)
+
+        # Review subunit: pull hardest 10 words from all sibling subunits
+        if current_unit and current_unit.get("is_review"):
+            return self._build_review(unit_id, current_unit, units)
+
         vocab = self._curriculum.get_vocab(unit_id)
         sentences = self._curriculum.get_sentences(unit_id)
         words_state = self._progress.get_words_state()
@@ -102,6 +109,60 @@ class SessionBuilder:
 
             chosen_type = random.choice(available)
             ex = self._create_exercise(chosen_type, item, all_vocab_words, all_sl_words, item_sentences)
+            exercises.append(ex)
+            last_type = chosen_type
+
+        return exercises
+
+    def _build_review(self, unit_id: str, current_unit: dict, units: list) -> list:
+        """Build a review session from the hardest 10 words across the parent section."""
+        parent_id = current_unit.get("parent", "")
+        siblings = [u for u in units if u.get("parent") == parent_id and not u.get("is_review")]
+        words_state = self._progress.get_words_state()
+
+        # Collect all vocab from sibling subunits
+        all_vocab = []
+        all_sentences = []
+        for sib in siblings:
+            all_vocab.extend(self._curriculum.get_vocab(sib["id"]))
+            all_sentences.extend(self._curriculum.get_sentences(sib["id"]))
+
+        # Score each word: lower box + more incorrect = harder = higher priority
+        def difficulty_score(item):
+            state = words_state.get(item["sl"])
+            if state is None:
+                return 0  # never seen — low priority for review
+            return (5 - state.box) * 10 + state.incorrect
+
+        scored = sorted(all_vocab, key=difficulty_score, reverse=True)
+        # Take top 10, but only words that have been seen
+        seen = [v for v in scored if words_state.get(v["sl"]) is not None]
+        selected = seen[:10]
+
+        # If fewer than 10 seen words, pad with unseen
+        if len(selected) < 10:
+            unseen = [v for v in all_vocab if words_state.get(v["sl"]) is None]
+            random.shuffle(unseen)
+            selected.extend(unseen[:10 - len(selected)])
+
+        all_en = list({v["en"] for v in all_vocab})
+        all_sl = list({v["sl"] for v in all_vocab})
+
+        exercises = []
+        last_type = None
+        exercise_types = [
+            ExerciseType.MULTIPLE_CHOICE,
+            ExerciseType.FILL_BLANK,
+            ExerciseType.LISTENING,
+            ExerciseType.TYPING,
+        ]
+        for item in selected:
+            available = [t for t in exercise_types if t != last_type]
+            item_sentences = [s for s in all_sentences if item["sl"] in s.get("vocab_ids", [])]
+            if not get_audio_path(item["sl"]):
+                available = [t for t in available if t != ExerciseType.LISTENING]
+            chosen_type = random.choice(available)
+            ex = self._create_exercise(chosen_type, item, all_en, all_sl, item_sentences)
             exercises.append(ex)
             last_type = chosen_type
 

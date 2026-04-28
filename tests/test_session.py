@@ -24,13 +24,13 @@ def builder(loader, progress):
 
 def test_build_session_returns_exercises(builder):
     exercises = builder.build("pozdravi_1")
-    assert len(exercises) == 4  # 4 vocab items per subunit
+    assert len(exercises) == 10
 
 
 def test_session_has_mixed_types(builder):
     exercises = builder.build("pozdravi_1")
     types = {ex.exercise_type for ex in exercises}
-    assert len(types) >= 2  # at least 2 different exercise types with 4 items
+    assert len(types) >= 3
 
 
 def test_no_two_same_types_in_a_row(builder):
@@ -40,13 +40,23 @@ def test_no_two_same_types_in_a_row(builder):
 
 
 def test_due_words_prioritized(builder, progress):
-    state = WordState(word="hvala", box=1, last_reviewed=datetime.now() - timedelta(days=1))
+    state = WordState(word="dober dan", box=1, last_reviewed=datetime.now() - timedelta(days=1))
     progress.update_word_state(state)
     exercises = builder.build("pozdravi_1")
     exercise_words = [ex.word_sl for ex in exercises]
-    assert "hvala" in exercise_words
+    assert "dober dan" in exercise_words
 
 
 def test_builds_for_any_unit(builder):
     exercises = builder.build("stevila_1")
-    assert len(exercises) == 4
+    assert len(exercises) == 10
+
+
+def test_review_builds_without_crash(builder, progress):
+    # Mark some words as seen so review has data
+    for word in ["dober dan", "živjo", "hvala"]:
+        state = WordState(word=word, box=2, correct=1, incorrect=1)
+        progress.update_word_state(state)
+    exercises = builder.build("pozdravi_5")
+    assert len(exercises) > 0
+    assert len(exercises) <= 10

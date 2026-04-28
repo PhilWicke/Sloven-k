@@ -104,7 +104,13 @@ class LessonCard(BoxLayout):
         text_box = BoxLayout(orientation="vertical", spacing=dp(1))
         subunit_name = unit.get("subunit_name", unit["name_en"])
         subunit_num = unit.get("subunit", "")
-        display = f"{subunit_num}. {subunit_name}" if subunit_num else unit["name_en"]
+        is_review = unit.get("is_review", False)
+        if is_review:
+            display = "Review"
+        elif subunit_num:
+            display = f"{subunit_num}. {subunit_name}"
+        else:
+            display = unit["name_en"]
         name = Label(text=display,
                      font_size="15sp", bold=not locked,
                      color=TEXT_LIGHT if locked else TEXT_DARK,
@@ -114,7 +120,8 @@ class LessonCard(BoxLayout):
 
         status_str = "Locked" if locked else status.replace("_", " ").capitalize()
         if score > 0:
-            status_str += f"  ·  {score}/{total}"
+            display_total = 10 if is_review else total
+            status_str += f"  ·  {score}/{display_total}"
         sub = Label(text=status_str, font_size="11sp", color=TEXT_LIGHT,
                     halign="left", valign="center")
         sub.bind(size=sub.setter("text_size"))
