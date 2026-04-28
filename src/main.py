@@ -16,6 +16,7 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager
 
+from screens.splash import SplashScreen
 from screens.home import HomeScreen
 from screens.lesson_select import LessonSelectScreen
 from screens.exercise import ExerciseScreen
@@ -38,6 +39,7 @@ class SlovencekApp(App):
     def build(self):
         self.title = "Slovenčk"
         sm = ScreenManager()
+        sm.add_widget(SplashScreen(name="splash"))
         sm.add_widget(HomeScreen(name="home"))
         sm.add_widget(LessonSelectScreen(name="lesson_select"))
         sm.add_widget(ExerciseScreen(name="exercise"))
