@@ -1,0 +1,17 @@
+{
+  "name": "Slovenčk",
+  "short_name": "Slovenčk",
+  "description": "Learn Slovenian",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F7F0E8",
+  "theme_color": "#B84D29",
+  "icons": [
+    {
+      "src": "labubu.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

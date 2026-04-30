@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#B84D29">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="labubu.png">
+<title>Slovenčk</title>
+<style>
+:root {
+  --bg: #F7F0E8;
+  --card: #FFFFFF;
+  --primary: #B84D29;
+  --primary-dark: #9A3D1F;
+  --secondary: #5A7D50;
+  --secondary-dark: #4A6A42;
+  --accent: #8B6914;
+  --correct: #4D8534;
+  --error: #B8382A;
+  --warn: #B37A2E;
+  --text: #241F1A;
+  --text-mid: #665C52;
+  --text-light: #998E82;
+  --border: #D4CEC6;
+  --choice: #FFFFFF;
+  --choice-border: #D4CEC6;
+  --progress-bg: #E5DDD4;
+  --radius: 10px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+}
+.screen { display:none; min-height:100vh; padding:20px; }
+.screen.active { display:flex; flex-direction:column; }
+
+/* Buttons */
+.btn {
+  display:block; width:100%; padding:14px; border:none; border-radius:var(--radius);
+  font-size:16px; font-weight:600; cursor:pointer; text-align:center;
+  transition: opacity 0.15s;
+}
+.btn:active { opacity:0.8; }
+.btn-primary { background:var(--primary); color:#fff; }
+.btn-secondary { background:var(--secondary); color:#fff; }
+.btn-accent { background:var(--accent); color:#fff; }
+.btn-choice {
+  background:var(--choice); color:var(--text); border:1.5px solid var(--choice-border);
+  font-weight:400; text-align:left; padding:13px 16px;
+}
+.btn-choice:active { background:#F0EBE5; }
+.btn-back {
+  background:#E8E2DA; color:var(--text-mid); width:36px; height:36px;
+  padding:0; font-size:18px; border-radius:8px; flex-shrink:0;
+}
+.btn + .btn { margin-top:8px; }
+.btn-small { padding:8px 16px; width:auto; font-size:13px; border-radius:7px; }
+
+/* Cards */
+.card {
+  background:var(--card); border-radius:var(--radius);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06); padding:16px;
+}
+
+/* Progress bar */
+.progress-track { background:var(--progress-bg); height:6px; border-radius:3px; overflow:hidden; }
+.progress-fill { background:var(--primary); height:100%; border-radius:3px; transition:width 0.3s; }
+
+/* Badge */
+.badge {
+  width:42px; height:42px; border-radius:var(--radius); display:flex;
+  align-items:center; justify-content:center; font-weight:700; font-size:13px;
+  color:#fff; flex-shrink:0; border:2px solid transparent; overflow:hidden;
+}
+.badge img { width:28px; height:28px; object-fit:contain; }
+.badge.locked { opacity:0.4; }
+
+/* Lesson card */
+.lesson-card {
+  display:flex; align-items:center; gap:12px; padding:12px;
+  background:var(--card); border-radius:var(--radius);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04); cursor:pointer;
+  transition: transform 0.1s;
+}
+.lesson-card:active { transform:scale(0.98); }
+.lesson-card.locked { opacity:0.55; pointer-events:none; }
+.lesson-card.done { background:#F4F7F2; }
+.lesson-info { flex:1; min-width:0; }
+.lesson-name { font-size:15px; font-weight:600; }
+.lesson-status { font-size:12px; color:var(--text-light); margin-top:2px; }
+.section-header {
+  font-size:13px; font-weight:700; color:var(--text-mid);
+  padding:16px 4px 6px; letter-spacing:0.3px;
+}
+
+/* Splash */
+#splash { align-items:center; justify-content:center; gap:8px; }
+#splash img { width:180px; height:180px; object-fit:contain; }
+#splash h1 { font-size:32px; color:var(--primary); }
+#splash p { color:var(--text-light); font-size:14px; }
+#splash .tap { color:var(--text-light); font-size:12px; margin-top:24px; opacity:0.6; }
+
+/* Home */
+.stats-row { display:flex; gap:8px; text-align:center; }
+.stat-col { flex:1; }
+.stat-num { font-size:26px; font-weight:700; }
+.stat-label { font-size:11px; color:var(--text-light); }
+
+/* Exercise */
+.ex-type { font-size:12px; color:var(--text-light); margin-bottom:4px; }
+.ex-prompt { font-size:20px; font-weight:600; text-align:center; margin:12px 0; }
+.ex-word { font-size:30px; font-weight:700; text-align:center; margin:8px 0; }
+.ex-phonetic { font-size:14px; color:var(--text-light); text-align:center; }
+.ex-sub { font-size:18px; color:var(--text-light); text-align:center; margin:8px 0; }
+.ex-counter { font-size:12px; color:var(--text-light); text-align:center; margin:6px 0; }
+.choices { display:flex; flex-direction:column; gap:8px; margin:12px 0; }
+.tiles { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin:12px 0; }
+.tile {
+  padding:10px 14px; background:var(--choice); border:1.5px solid var(--choice-border);
+  border-radius:8px; font-size:15px; cursor:pointer;
+}
+.tile.used { opacity:0.3; pointer-events:none; }
+.sentence-build { font-size:18px; color:var(--primary); text-align:center;
+  min-height:40px; padding:8px; margin:8px 0; }
+.match-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:12px 0; }
+.match-btn {
+  padding:12px 8px; background:var(--choice); border:1.5px solid var(--choice-border);
+  border-radius:8px; font-size:14px; cursor:pointer; text-align:center;
+  transition: all 0.15s;
+}
+.match-btn.selected { border-color:var(--primary); background:#FDF5F0; }
+.match-btn.matched { border-color:var(--correct); background:#F0F7EC; opacity:0.6; pointer-events:none; }
+.match-btn.wrong { border-color:var(--error); background:#FDF0EE; }
+.gender-tag {
+  display:inline-block; font-size:11px; padding:2px 8px; border-radius:4px;
+  background:#F0EBE5; color:var(--text-mid); margin-top:4px;
+}
+input[type=text] {
+  width:100%; padding:13px 16px; font-size:18px; border:1.5px solid var(--border);
+  border-radius:var(--radius); background:var(--card); color:var(--text);
+  outline:none;
+}
+input[type=text]:focus { border-color:var(--primary); }
+
+/* Feedback */
+.fb-result { font-size:28px; font-weight:700; text-align:center; margin:16px 0; }
+.fb-correct { color:var(--correct); }
+.fb-wrong { color:var(--error); }
+.fb-answer { font-size:16px; color:var(--text-mid); text-align:center; margin-bottom:12px; }
+.fb-card { text-align:center; }
+.fb-card .word { font-size:22px; font-weight:700; }
+.fb-card .trans { font-size:16px; color:var(--text-mid); margin-top:4px; }
+.fb-card .phon { font-size:13px; color:var(--text-light); margin-top:2px; }
+
+/* Results */
+.result-score { font-size:48px; font-weight:700; text-align:center; }
+.result-pct { font-size:20px; text-align:center; margin-bottom:12px; }
+.review-word { font-size:14px; color:var(--text-mid); padding:4px 0; }
+
+.spacer { flex:1; }
+.gap { height:12px; }
+.gap-sm { height:6px; }
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash" class="screen active" onclick="showScreen('home')">
+  <img src="labubu.png" alt="Slovenčk mascot">
+  <h1>Slovenčk</h1>
+  <p>Learn Slovenian</p>
+  <span class="tap">tap to start</span>
+</div>
+
+<!-- HOME -->
+<div id="home" class="screen">
+  <div style="height:24px"></div>
+  <div style="text-align:center">
+    <div style="font-size:28px;font-weight:700;color:var(--primary)">Slovenčk</div>
+    <div style="font-size:14px;color:var(--text-light);margin-top:4px">Learn Slovenian</div>
+  </div>
+  <div class="gap"></div>
+  <div class="card">
+    <div style="font-size:13px;font-weight:600;color:var(--primary);margin-bottom:8px">Your Progress</div>
+    <div class="stats-row">
+      <div class="stat-col"><div class="stat-num" id="stat-lessons">0</div><div class="stat-label">Lessons</div></div>
+      <div class="stat-col"><div class="stat-num" id="stat-learned">0</div><div class="stat-label">Learned</div></div>
+      <div class="stat-col"><div class="stat-num" id="stat-reviewing">0</div><div class="stat-label">Reviewing</div></div>
+    </div>
+  </div>
+  <div class="spacer"></div>
+  <button class="btn btn-primary" onclick="continueLesson()">Continue Learning</button>
+  <button class="btn btn-secondary" onclick="showScreen('lessons')">All Lessons</button>
+  <div class="gap"></div>
+</div>
+
+<!-- LESSONS -->
+<div id="lessons" class="screen">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+    <button class="btn btn-back" onclick="showScreen('home')">&lt;</button>
+    <div style="font-size:22px;font-weight:700">Lessons</div>
+  </div>
+  <div id="lesson-list" style="flex:1;overflow-y:auto"></div>
+</div>
+
+<!-- EXERCISE -->
+<div id="exercise" class="screen">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+    <button class="btn btn-back" onclick="confirmQuit()">&lt;</button>
+    <div style="flex:1"></div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="ex-progress"></div></div>
+  <div class="ex-counter" id="ex-counter"></div>
+  <div id="ex-content"></div>
+</div>
+
+<!-- FEEDBACK -->
+<div id="feedback" class="screen">
+  <div class="spacer"></div>
+  <div id="fb-content"></div>
+  <div class="spacer"></div>
+  <button class="btn btn-primary" onclick="nextExercise()">Next</button>
+  <div class="gap"></div>
+</div>
+
+<!-- RESULTS -->
+<div id="results" class="screen">
+  <div style="height:32px"></div>
+  <div style="font-size:24px;font-weight:700;text-align:center">Lesson Complete</div>
+  <div class="gap"></div>
+  <div id="result-content"></div>
+  <div class="spacer"></div>
+  <button class="btn btn-secondary" onclick="retryLesson()">Retry</button>
+  <button class="btn btn-primary" onclick="nextLesson()">Continue</button>
+  <div class="gap"></div>
+</div>
+
+<script>
+// ===== STATE =====
+let curriculum = null;
+let progress = null; // {lessons:{}, words:{}}
+let currentUnitId = '';
+let exercises = [];
+let exIdx = 0;
+let score = 0;
+
+// ===== PERSISTENCE =====
+function loadProgress() {
+  try { progress = JSON.parse(localStorage.getItem('slovencek_progress')) || {lessons:{},words:{}}; }
+  catch { progress = {lessons:{},words:{}}; }
+}
+function saveProgress() { localStorage.setItem('slovencek_progress', JSON.stringify(progress)); }
+
+// ===== SRS =====
+const BOX_INTERVALS = [0, 0, 1, 3, 7, 14]; // box 1=always due
+function isWordDue(w) {
+  if (!w || w.box <= 1) return true;
+  if (!w.lastReviewed) return true;
+  const days = (Date.now() - w.lastReviewed) / 86400000;
+  return days >= BOX_INTERVALS[w.box];
+}
+function recordAnswer(word, correct) {
+  if (!progress.words[word]) progress.words[word] = {box:1,correct:0,incorrect:0,lastReviewed:null};
+  const w = progress.words[word];
+  if (correct) { w.box = Math.min(w.box + 1, 5); w.correct++; }
+  else { w.box = 1; w.incorrect++; }
+  w.lastReviewed = Date.now();
+  saveProgress();
+}
+
+// ===== SCREENS =====
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (id === 'home') renderHome();
+  if (id === 'lessons') renderLessons();
+}
+
+// ===== HOME =====
+function renderHome() {
+  const lessons = Object.values(progress.lessons).filter(l => l.status === 'completed').length;
+  const words = Object.values(progress.words);
+  const learned = words.filter(w => w.box >= 5).length;
+  const reviewing = words.filter(w => w.box > 1 && w.box < 5).length;
+  document.getElementById('stat-lessons').textContent = lessons;
+  document.getElementById('stat-learned').textContent = learned;
+  document.getElementById('stat-reviewing').textContent = reviewing;
+}
+
+function continueLesson() {
+  const units = curriculum.units;
+  for (const u of units) {
+    const s = progress.lessons[u.id];
+    if (!s || s.status !== 'completed') {
+      startLesson(u.id);
+      return;
+    }
+  }
+  showScreen('lessons');
+}
+
+// ===== LESSONS =====
+const UNIT_COLORS = {
+  pozdravi:'#B84D29', stevila:'#8B6914', barve:'#944770',
+  hrana:'#B37A2E', druzina:'#755B8F', zivali:'#5A7D50',
+  telo:'#806046', oblacila:'#66758F', hisa:'#997050', cas:'#577A75',
+};
+
+function renderLessons() {
+  const list = document.getElementById('lesson-list');
+  list.innerHTML = '';
+  let prevOk = true, currentParent = null;
+
+  for (const u of curriculum.units) {
+    const parent = u.parent || u.id;
+    if (parent !== currentParent) {
+      currentParent = parent;
+      const h = document.createElement('div');
+      h.className = 'section-header';
+      h.textContent = `${u.name_sl}  ·  ${u.name_en}`;
+      list.appendChild(h);
+    }
+
+    const status = progress.lessons[u.id]?.status || 'not_started';
+    const scr = progress.lessons[u.id]?.best_score || 0;
+    const locked = !prevOk;
+    const isReview = u.is_review;
+
+    const card = document.createElement('div');
+    card.className = 'lesson-card' + (locked ? ' locked' : '') + (status === 'completed' ? ' done' : '');
+
+    const color = UNIT_COLORS[parent] || '#806046';
+    const badgeStyle = locked
+      ? 'background:#D4CEC6;'
+      : `background:${color}20; border-color:${color};`;
+
+    const label = isReview ? 'Review' : `${u.subunit}. ${u.subunit_name}`;
+    const statusStr = locked ? 'Locked' : status.replace('_',' ');
+    const scoreStr = scr > 0 ? `  ·  ${scr}/${u.vocab.length || 10}` : '';
+
+    card.innerHTML = `
+      <div class="badge" style="${badgeStyle}">
+        <img src="icons/${parent}.png" onerror="this.style.display='none';this.parentElement.textContent='${u.subunit||'R'}'">
+      </div>
+      <div class="lesson-info">
+        <div class="lesson-name">${label}</div>
+        <div class="lesson-status">${statusStr}${scoreStr}</div>
+      </div>
+    `;
+    if (!locked) card.onclick = () => startLesson(u.id);
+    list.appendChild(card);
+
+    prevOk = status === 'completed' ? true : (prevOk ? false : false);
+  }
+}
+
+// ===== AUDIO =====
+function speak(text) {
+  if ('speechSynthesis' in window) {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'sl-SI';
+    u.rate = 0.85;
+    speechSynthesis.speak(u);
+  }
+}
+
+// ===== SESSION BUILDER =====
+function buildSession(unitId) {
+  const unit = curriculum.units.find(u => u.id === unitId);
+  if (!unit) return [];
+
+  // Review unit: pull hardest words from sibling subunits
+  if (unit.is_review) return buildReview(unit);
+
+  const vocab = unit.vocab;
+  const sentences = unit.sentences || [];
+  const parent = unit.parent || unit.id;
+  const siblings = curriculum.units.filter(u => (u.parent || u.id) === parent && !u.is_review);
+  const allVocab = siblings.flatMap(s => s.vocab);
+  const allEn = [...new Set(allVocab.map(v => v.en))];
+  const allSl = [...new Set(allVocab.map(v => v.sl))];
+
+  const types = ['flashcard','multiple_choice','mc_reverse','fill_blank','typing',
+                  'reverse_typing','listening','dictation','sentence_building','context_cloze'];
+  const exs = [];
+  let lastType = '';
+
+  // Start with a matching round if we have 4+ words
+  if (vocab.length >= 4) {
+    const matchItems = shuffle([...vocab]).slice(0, 4);
+    exs.push({type:'matching', pairs: matchItems.map(v => ({sl:v.sl, en:v.en})),
+              word_sl: matchItems[0].sl, word_en: matchItems[0].en, item: matchItems[0]});
+  }
+
+  for (const item of vocab) {
+    let avail = types.filter(t => t !== lastType);
+    const itemSent = sentences.filter(s => (s.vocab_ids||[]).includes(item.sl));
+    if (!itemSent.length) avail = avail.filter(t => t !== 'sentence_building');
+    if (!item.example || !item.example.includes(item.sl)) avail = avail.filter(t => t !== 'context_cloze');
+
+    const type = avail[Math.floor(Math.random() * avail.length)];
+    exs.push(createExercise(type, item, allEn, allSl, itemSent));
+    lastType = type;
+  }
+  return exs;
+}
+
+function buildReview(unit) {
+  const parent = unit.parent;
+  const siblings = curriculum.units.filter(u => u.parent === parent && !u.is_review);
+  const allVocab = siblings.flatMap(s => s.vocab);
+  const allSent = siblings.flatMap(s => s.sentences || []);
+  const allEn = [...new Set(allVocab.map(v => v.en))];
+  const allSl = [...new Set(allVocab.map(v => v.sl))];
+
+  const scored = allVocab.map(v => {
+    const w = progress.words[v.sl];
+    if (!w) return {item:v, score:0};
+    return {item:v, score: (5 - w.box)*10 + w.incorrect};
+  }).sort((a,b) => b.score - a.score);
+
+  const seen = scored.filter(s => progress.words[s.item.sl]);
+  let selected = seen.slice(0, 10).map(s => s.item);
+  if (selected.length < 10) {
+    const unseen = scored.filter(s => !progress.words[s.item.sl]).map(s => s.item);
+    selected = selected.concat(unseen.slice(0, 10 - selected.length));
+  }
+
+  const types = ['multiple_choice','mc_reverse','fill_blank','typing','reverse_typing','listening','dictation','context_cloze'];
+  const exs = [];
+  let lastType = '';
+  for (const item of selected) {
+    let avail = types.filter(t => t !== lastType);
+    if (!item.example || !item.example.includes(item.sl)) avail = avail.filter(t => t !== 'context_cloze');
+    const type = avail[Math.floor(Math.random() * avail.length)];
+    const itemSent = allSent.filter(s => (s.vocab_ids||[]).includes(item.sl));
+    exs.push(createExercise(type, item, allEn, allSl, itemSent));
+    lastType = type;
+  }
+  return exs;
+}
+
+function shuffle(arr) { for (let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];} return arr; }
+
+function createExercise(type, item, allEn, allSl, sentences) {
+  const ex = {type, word_sl:item.sl, word_en:item.en, phonetic:item.phonetic, item};
+
+  if (type === 'flashcard') {
+    // no extra data needed
+  } else if (type === 'multiple_choice') {
+    // SL → EN direction
+    const distractors = shuffle(allEn.filter(w => w !== item.en)).slice(0,3);
+    ex.choices = shuffle([...distractors, item.en]);
+    ex.correctIdx = ex.choices.indexOf(item.en);
+    ex.prompt = `What is '${item.sl}' in English?`;
+  } else if (type === 'mc_reverse') {
+    // EN → SL direction
+    const distractors = shuffle(allSl.filter(w => w !== item.sl)).slice(0,3);
+    ex.choices = shuffle([...distractors, item.sl]);
+    ex.correctIdx = ex.choices.indexOf(item.sl);
+    ex.prompt = `What is '${item.en}' in Slovenian?`;
+  } else if (type === 'fill_blank') {
+    let blank = item.example.replace(item.sl, '_____');
+    if (blank === item.example) blank = `_____ = ${item.en}`;
+    const distractors = shuffle(allSl.filter(w => w !== item.sl)).slice(0,3);
+    ex.sentence = blank;
+    ex.choices = shuffle([...distractors, item.sl]);
+    ex.correct = item.sl;
+  } else if (type === 'context_cloze') {
+    // Type the missing word from context — no word bank
+    let blank = item.example.replace(item.sl, '_____');
+    ex.sentence = blank;
+    ex.hint = item.example_en;
+    ex.correct = item.sl;
+  } else if (type === 'typing') {
+    ex.prompt = `Type the English for: ${item.sl}`;
+    ex.correct = item.en;
+  } else if (type === 'reverse_typing') {
+    // EN → SL typing
+    ex.prompt = `Type the Slovenian for: ${item.en}`;
+    ex.correct = item.sl;
+  } else if (type === 'listening') {
+    const distractors = shuffle(allSl.filter(w => w !== item.sl)).slice(0,3);
+    ex.choices = shuffle([...distractors, item.sl]);
+    ex.correctIdx = ex.choices.indexOf(item.sl);
+  } else if (type === 'dictation') {
+    // Hear and type what you hear
+    ex.correct = item.sl;
+  } else if (type === 'sentence_building') {
+    const sent = sentences[Math.floor(Math.random()*sentences.length)];
+    ex.prompt = `Build: '${sent.en}'`;
+    ex.correctWords = sent.sl.split(' ');
+    ex.scrambled = shuffle([...ex.correctWords]);
+  }
+  return ex;
+}
+
+// ===== EXERCISE RENDERING =====
+function startLesson(unitId) {
+  currentUnitId = unitId;
+  exercises = buildSession(unitId);
+  exIdx = 0;
+  score = 0;
+  showScreen('exercise');
+  renderExercise();
+}
+
+function renderExercise() {
+  if (exIdx >= exercises.length) { finishLesson(); return; }
+  const ex = exercises[exIdx];
+  const pct = (exIdx / exercises.length) * 100;
+  document.getElementById('ex-progress').style.width = pct + '%';
+  document.getElementById('ex-counter').textContent = `${exIdx+1} / ${exercises.length}`;
+
+  const c = document.getElementById('ex-content');
+  c.innerHTML = '';
+
+  if (ex.type === 'flashcard') renderFlashcard(c, ex);
+  else if (ex.type === 'multiple_choice' || ex.type === 'mc_reverse') renderMC(c, ex);
+  else if (ex.type === 'fill_blank') renderFillBlank(c, ex);
+  else if (ex.type === 'context_cloze') renderContextCloze(c, ex);
+  else if (ex.type === 'typing' || ex.type === 'reverse_typing') renderTyping(c, ex);
+  else if (ex.type === 'listening') renderListening(c, ex);
+  else if (ex.type === 'dictation') renderDictation(c, ex);
+  else if (ex.type === 'sentence_building') renderSentenceBuild(c, ex);
+  else if (ex.type === 'matching') renderMatching(c, ex);
+}
+
+function renderFlashcard(c, ex) {
+  const gender = ex.item?.gender ? {m:'masc.',f:'fem.',n:'neut.'}[ex.item.gender] : '';
+  c.innerHTML = `
+    <div class="ex-type">Flashcard — do you know this word?</div>
+    <div class="ex-word">${ex.word_sl}</div>
+    ${ex.phonetic ? `<div class="ex-phonetic">[${ex.phonetic}]</div>` : ''}
+    ${gender ? `<div style="text-align:center"><span class="gender-tag">${gender}</span></div>` : ''}
+    <div class="ex-sub" id="flash-answer">tap to reveal</div>
+    <div class="gap"></div>
+    <button class="btn btn-accent btn-small" style="width:100%" onclick="speak('${ex.word_sl.replace(/'/g,"\\'")}')">Listen</button>
+    <div class="gap-sm"></div>
+    <button class="btn btn-primary" id="flash-btn" onclick="revealFlash()">Reveal</button>
+  `;
+}
+function revealFlash() {
+  const ex = exercises[exIdx];
+  document.getElementById('flash-answer').textContent = ex.word_en;
+  document.getElementById('flash-answer').style.color = 'var(--text)';
+  document.getElementById('flash-btn').outerHTML = `
+    <button class="btn btn-primary" onclick="handleAnswer(true)">I knew it</button>
+    <button class="btn" style="background:var(--error);color:#fff" onclick="handleAnswer(false)">I didn't know</button>
+  `;
+}
+
+function renderMC(c, ex) {
+  c.innerHTML = `
+    <div class="ex-type">Choose the correct translation</div>
+    <div class="ex-prompt">${ex.prompt}</div>
+    <button class="btn btn-accent btn-small" style="width:100%" onclick="speak('${ex.word_sl.replace(/'/g,"\\'")}')">Listen</button>
+    <div class="choices">${ex.choices.map((ch,i) =>
+      `<button class="btn btn-choice" onclick="handleAnswer(${i===ex.correctIdx})">${ch}</button>`
+    ).join('')}</div>
+  `;
+}
+
+function renderFillBlank(c, ex) {
+  c.innerHTML = `
+    <div class="ex-type">Fill in the blank</div>
+    <div class="ex-prompt">${ex.sentence}</div>
+    <div class="choices">${ex.choices.map(ch =>
+      `<button class="btn btn-choice" onclick="handleAnswer(${ch===ex.correct?'true':'false'})">${ch}</button>`
+    ).join('')}</div>
+  `;
+}
+
+function renderTyping(c, ex) {
+  c.innerHTML = `
+    <div class="ex-type">Type your answer</div>
+    <div class="ex-prompt">${ex.prompt}</div>
+    <button class="btn btn-accent btn-small" style="width:100%" onclick="speak('${ex.word_sl.replace(/'/g,"\\'")}')">Listen</button>
+    <div class="gap"></div>
+    <input type="text" id="type-input" placeholder="Type your answer…" autocomplete="off" autocapitalize="off">
+    <div class="gap-sm"></div>
+    <button class="btn btn-primary" onclick="checkTyping()">Check</button>
+  `;
+  setTimeout(() => document.getElementById('type-input')?.focus(), 100);
+}
+function checkTyping() {
+  const ex = exercises[exIdx];
+  const input = document.getElementById('type-input').value;
+  handleAnswer(fuzzyMatch(input, ex.correct));
+}
+
+function renderListening(c, ex) {
+  c.innerHTML = `
+    <div class="ex-type">What do you hear?</div>
+    <div class="gap"></div>
+    <button class="btn btn-primary" style="font-size:18px;padding:18px" onclick="speak('${ex.word_sl.replace(/'/g,"\\'")}')">Play Audio</button>
+    <div class="choices">${ex.choices.map((ch,i) =>
+      `<button class="btn btn-choice" onclick="handleAnswer(${i===ex.correctIdx})">${ch}</button>`
+    ).join('')}</div>
+  `;
+  setTimeout(() => speak(ex.word_sl), 400);
+}
+
+function renderSentenceBuild(c, ex) {
+  window._sbSelected = [];
+  c.innerHTML = `
+    <div class="ex-type">Tap words in the correct order</div>
+    <div class="ex-prompt">${ex.prompt}</div>
+    <div class="sentence-build" id="sb-display">···</div>
+    <div class="tiles" id="sb-tiles">${ex.scrambled.map((w,i) =>
+      `<div class="tile" id="tile-${i}" onclick="sbTap(${i},'${w.replace(/'/g,"\\'")}')"> ${w}</div>`
+    ).join('')}</div>
+    <button class="btn btn-accent btn-small" style="width:100%" onclick="sbClear()">Clear</button>
+  `;
+}
+function sbTap(i, word) {
+  window._sbSelected.push(word);
+  document.getElementById(`tile-${i}`).classList.add('used');
+  document.getElementById('sb-display').textContent = window._sbSelected.join(' ');
+  const ex = exercises[exIdx];
+  if (window._sbSelected.length === ex.correctWords.length) {
+    const correct = window._sbSelected.every((w,j) => w === ex.correctWords[j]);
+    handleAnswer(correct);
+  }
+}
+function sbClear() {
+  window._sbSelected = [];
+  document.getElementById('sb-display').textContent = '···';
+  document.querySelectorAll('.tile').forEach(t => t.classList.remove('used'));
+}
+
+// ===== NEW EXERCISE RENDERERS =====
+function renderContextCloze(c, ex) {
+  c.innerHTML = `
+    <div class="ex-type">Type the missing word from context</div>
+    <div class="ex-prompt">${ex.sentence}</div>
+    <div style="font-size:13px;color:var(--text-light);text-align:center;margin:4px 0">${ex.hint}</div>
+    <div class="gap"></div>
+    <input type="text" id="cloze-input" placeholder="Type the missing word…" autocomplete="off" autocapitalize="off">
+    <div class="gap-sm"></div>
+    <button class="btn btn-primary" onclick="checkCloze()">Check</button>
+  `;
+  setTimeout(() => document.getElementById('cloze-input')?.focus(), 100);
+}
+function checkCloze() {
+  const ex = exercises[exIdx];
+  handleAnswer(fuzzyMatch(document.getElementById('cloze-input').value, ex.correct));
+}
+
+function renderDictation(c, ex) {
+  c.innerHTML = `
+    <div class="ex-type">Listen and type what you hear</div>
+    <div class="gap"></div>
+    <button class="btn btn-primary" style="font-size:18px;padding:18px" onclick="speak('${ex.word_sl.replace(/'/g,"\\'")}')">Play Audio</button>
+    <div class="gap"></div>
+    <input type="text" id="dict-input" placeholder="Type what you hear…" autocomplete="off" autocapitalize="off">
+    <div class="gap-sm"></div>
+    <button class="btn btn-primary" onclick="checkDictation()">Check</button>
+  `;
+  setTimeout(() => speak(ex.word_sl), 400);
+  setTimeout(() => document.getElementById('dict-input')?.focus(), 600);
+}
+function checkDictation() {
+  const ex = exercises[exIdx];
+  handleAnswer(fuzzyMatch(document.getElementById('dict-input').value, ex.correct));
+}
+
+function renderMatching(c, ex) {
+  window._matchState = {selected: null, matched: 0, total: ex.pairs.length};
+  const slItems = shuffle(ex.pairs.map((p,i) => ({text:p.sl, idx:i, side:'sl'})));
+  const enItems = shuffle(ex.pairs.map((p,i) => ({text:p.en, idx:i, side:'en'})));
+
+  c.innerHTML = `
+    <div class="ex-type">Match the pairs</div>
+    <div class="gap"></div>
+    <div class="match-grid">
+      <div><div style="font-size:11px;color:var(--text-light);text-align:center;margin-bottom:6px">Slovenian</div>
+        ${slItems.map(it => `<div class="match-btn" id="m-sl-${it.idx}" onclick="matchTap('sl',${it.idx})">${it.text}</div>`).join('')}
+      </div>
+      <div><div style="font-size:11px;color:var(--text-light);text-align:center;margin-bottom:6px">English</div>
+        ${enItems.map(it => `<div class="match-btn" id="m-en-${it.idx}" onclick="matchTap('en',${it.idx})">${it.text}</div>`).join('')}
+      </div>
+    </div>
+  `;
+}
+function matchTap(side, idx) {
+  const st = window._matchState;
+  const el = document.getElementById(`m-${side}-${idx}`);
+
+  if (!st.selected) {
+    st.selected = {side, idx};
+    el.classList.add('selected');
+  } else {
+    const prev = st.selected;
+    const prevEl = document.getElementById(`m-${prev.side}-${prev.idx}`);
+
+    if (prev.side === side) {
+      // Same column — switch selection
+      prevEl.classList.remove('selected');
+      st.selected = {side, idx};
+      el.classList.add('selected');
+    } else if (prev.idx === idx) {
+      // Correct match!
+      prevEl.classList.remove('selected');
+      prevEl.classList.add('matched');
+      el.classList.add('matched');
+      st.selected = null;
+      st.matched++;
+      if (st.matched >= st.total) {
+        setTimeout(() => handleAnswer(true), 400);
+      }
+    } else {
+      // Wrong match
+      prevEl.classList.remove('selected');
+      prevEl.classList.add('wrong');
+      el.classList.add('wrong');
+      st.selected = null;
+      setTimeout(() => {
+        prevEl.classList.remove('wrong');
+        el.classList.remove('wrong');
+      }, 600);
+    }
+  }
+}
+
+// ===== ANSWER HANDLING =====
+function fuzzyMatch(input, correct) {
+  const norm = s => s.trim().toLowerCase().replace(/[.,!?;:"'()—–\-]/g,' ').replace(/\s+/g,' ').trim();
+  if (norm(input) === norm(correct)) return true;
+  const strip = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  return strip(norm(input)) === strip(norm(correct));
+}
+
+function handleAnswer(correct) {
+  const ex = exercises[exIdx];
+  if (correct) score++;
+  recordAnswer(ex.word_sl, correct);
+  showFeedback(ex, correct);
+}
+
+function showFeedback(ex, correct) {
+  const c = document.getElementById('fb-content');
+  const unit = curriculum.units.find(u => u.id === currentUnitId);
+  const item = unit?.vocab?.find(v => v.sl === ex.word_sl) || ex.item;
+  const correctAnswer = ex.correct || ex.word_en || (ex.correctWords ? ex.correctWords.join(' ') : '');
+
+  const gender = item?.gender ? {m:'masculine',f:'feminine',n:'neuter'}[item.gender] : null;
+  const example = item?.example && item?.example_en
+    ? `<div style="font-size:13px;color:var(--text-light);margin-top:8px;font-style:italic">"${item.example}"</div>
+       <div style="font-size:12px;color:var(--text-light)">${item.example_en}</div>` : '';
+
+  c.innerHTML = `
+    <div class="fb-result ${correct ? 'fb-correct' : 'fb-wrong'}">${correct ? 'Correct!' : 'Not quite'}</div>
+    ${!correct && correctAnswer ? `<div class="fb-answer">Answer: ${correctAnswer}</div>` : ''}
+    <div class="card fb-card">
+      <div class="word">${ex.word_sl}</div>
+      <div class="trans">${ex.word_en}</div>
+      ${item?.phonetic ? `<div class="phon">[${item.phonetic}]</div>` : ''}
+      ${gender ? `<div class="gender-tag">${gender}</div>` : ''}
+      ${example}
+    </div>
+    <div class="gap-sm"></div>
+    <button class="btn btn-accent btn-small" onclick="speak('${ex.word_sl.replace(/'/g,"\\'")}')">Listen</button>
+  `;
+  showScreen('feedback');
+  // re-show feedback screen (showScreen hides it, then we activate)
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('feedback').classList.add('active');
+}
+
+function nextExercise() {
+  exIdx++;
+  showScreen('exercise');
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('exercise').classList.add('active');
+  renderExercise();
+}
+
+// ===== FINISH =====
+function finishLesson() {
+  if (!progress.lessons[currentUnitId]) progress.lessons[currentUnitId] = {};
+  progress.lessons[currentUnitId].status = 'completed';
+  const prev = progress.lessons[currentUnitId].best_score || 0;
+  progress.lessons[currentUnitId].best_score = Math.max(prev, score);
+  saveProgress();
+
+  const unit = curriculum.units.find(u => u.id === currentUnitId);
+  const total = exercises.length;
+  const pct = Math.round((score/total)*100);
+  const color = pct >= 70 ? 'var(--correct)' : pct >= 50 ? 'var(--warn)' : 'var(--error)';
+
+  // Words to review
+  const vocab = unit?.vocab || [];
+  const reviewWords = vocab.filter(v => {
+    const w = progress.words[v.sl];
+    return w && w.box === 1 && w.incorrect > 0;
+  }).map(v => `${v.sl}  →  ${v.en}`);
+
+  document.getElementById('result-content').innerHTML = `
+    <div class="result-score" style="color:${color}">${score} / ${total}</div>
+    <div class="result-pct" style="color:${color}">${pct}%</div>
+    ${reviewWords.length ? `
+      <div class="card">
+        <div style="font-size:14px;font-weight:600;color:var(--text-mid);margin-bottom:6px">Review these:</div>
+        ${reviewWords.slice(0,5).map(w => `<div class="review-word">${w}</div>`).join('')}
+      </div>
+    ` : ''}
+  `;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('results').classList.add('active');
+}
+
+function retryLesson() { startLesson(currentUnitId); }
+function nextLesson() {
+  const units = curriculum.units;
+  const idx = units.findIndex(u => u.id === currentUnitId);
+  if (idx >= 0 && idx + 1 < units.length) startLesson(units[idx+1].id);
+  else showScreen('lessons');
+}
+function confirmQuit() { showScreen('home'); }
+
+// ===== INIT =====
+async function init() {
+  loadProgress();
+  const resp = await fetch('curriculum.json');
+  curriculum = await resp.json();
+  // Auto-advance splash after 3s
+  setTimeout(() => {
+    if (document.getElementById('splash').classList.contains('active')) showScreen('home');
+  }, 3000);
+}
+
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+init();
+</script>
+</body>
+</html>
