@@ -15,11 +15,11 @@
         {"sl": "zdravo", "en": "hello / hi", "gender": null, "phonetic": "ZDRAH-voh", "example": "Zdravo, prijatelj!", "example_en": "Hello, friend!"},
         {"sl": "pozdravljeni", "en": "greetings (formal)", "gender": null, "phonetic": "poz-DRAHV-lyeh-nee", "example": "Pozdravljeni, gospa.", "example_en": "Greetings, madam."},
         {"sl": "hej", "en": "hey", "gender": null, "phonetic": "hey", "example": "Hej, kaj je novega?", "example_en": "Hey, what's new?"},
-        {"sl": "bok", "en": "hi (casual)", "gender": null, "phonetic": "bohk", "example": "Bok, kako si?", "example_en": "Hi, how are you?"},
+        {"sl": "živijo", "en": "hello (informal)", "gender": null, "phonetic": "zhee-VEE-yo", "example": "Živijo, kako si?", "example_en": "Hello, how are you?"},
         {"sl": "čao", "en": "ciao / bye (casual)", "gender": null, "phonetic": "chow", "example": "Čao, se vidimo!", "example_en": "Ciao, see you!"},
         {"sl": "lep pozdrav", "en": "kind regards", "gender": null, "phonetic": "lehp POZ-drahv", "example": "Lep pozdrav iz Slovenije.", "example_en": "Kind regards from Slovenia."},
-        {"sl": "ahoj", "en": "ahoy / hi", "gender": null, "phonetic": "ah-HOY", "example": "Ahoj, kako gre?", "example_en": "Hi, how's it going?"},
-        {"sl": "zdrávstvujte", "en": "hello (very formal)", "gender": null, "phonetic": "ZDRAHV-stvoo-teh", "example": "Zdrávstvujte, gospod direktor.", "example_en": "Hello, Mr. Director."}
+        {"sl": "oj", "en": "hey / hi (casual)", "gender": null, "phonetic": "oy", "example": "Oj, kako gre?", "example_en": "Hey, how's it going?"},
+        {"sl": "dober dan vam", "en": "good day to you (formal)", "gender": null, "phonetic": "DOH-ber dahn vahm", "example": "Dober dan vam, gospod direktor.", "example_en": "Good day to you, Mr. Director."}
       ],
       "sentences": [
         {"sl": "Živjo, kako si danes?", "en": "Hello, how are you today?", "difficulty": 1, "vocab_ids": ["živjo"]},
@@ -70,7 +70,7 @@
         {"sl": "prosim", "en": "please / you're welcome", "gender": null, "phonetic": "PROH-seem", "example": "Prosim, pomagajte mi.", "example_en": "Please, help me."},
         {"sl": "oprostite", "en": "excuse me (formal)", "gender": null, "phonetic": "oh-prohs-TEE-teh", "example": "Oprostite, kje je postaja?", "example_en": "Excuse me, where is the station?"},
         {"sl": "izvolite", "en": "here you go / please (offering)", "gender": null, "phonetic": "eez-VOH-lee-teh", "example": "Izvolite, vaša kava.", "example_en": "Here you go, your coffee."},
-        {"sl": "nič", "en": "nothing / it's nothing", "gender": null, "phonetic": "neech", "example": "Ni za kaj, nič hudega.", "example_en": "You're welcome, it's nothing."},
+        {"sl": "niti", "en": "nor / neither", "gender": null, "phonetic": "NEE-tee", "example": "Niti ne vem, niti me ne zanima.", "example_en": "I neither know nor care."},
         {"sl": "seveda", "en": "of course", "gender": null, "phonetic": "seh-VEH-dah", "example": "Seveda, z veseljem.", "example_en": "Of course, with pleasure."},
         {"sl": "žal", "en": "unfortunately / sorry", "gender": null, "phonetic": "zhahl", "example": "Žal ne morem priti.", "example_en": "Unfortunately I can't come."},
         {"sl": "oprosti", "en": "sorry (informal)", "gender": null, "phonetic": "oh-PROHS-tee", "example": "Oprosti, nisem te videl.", "example_en": "Sorry, I didn't see you."},
@@ -296,7 +296,7 @@
         {"sl": "bež", "en": "beige", "gender": null, "phonetic": "behzh", "example": "Bež plašč je klasičen.", "example_en": "A beige coat is classic."},
         {"sl": "turkizna", "en": "turquoise", "gender": "f", "phonetic": "toor-KEEZ-nah", "example": "Turkizna voda je čista.", "example_en": "The turquoise water is clean."},
         {"sl": "koralna", "en": "coral", "gender": "f", "phonetic": "koh-RAHL-nah", "example": "Koralna barva je modna.", "example_en": "Coral is a trendy color."},
-        {"sl": "marelična", "en": "apricot (color)", "gender": "f", "phonetic": "mah-reh-LEECH-nah", "example": "Marelična stena je topla.", "example_en": "The apricot wall is warm."},
+        {"sl": "kostanjeva", "en": "chestnut (color)", "gender": "f", "phonetic": "kos-TAHN-ye-vah", "example": "Kostanjeva barva las je pogosta.", "example_en": "Chestnut hair color is common."},
         {"sl": "indigo", "en": "indigo", "gender": null, "phonetic": "EEN-dee-goh", "example": "Indigo je temno modra.", "example_en": "Indigo is dark blue."}
       ],
       "sentences": [
@@ -350,7 +350,7 @@
         {"sl": "sonce", "en": "sun", "gender": "n", "phonetic": "SOHN-tseh", "example": "Sonce sije nad goro.", "example_en": "The sun shines over the mountain."},
         {"sl": "sneg", "en": "snow", "gender": "m", "phonetic": "snehg", "example": "Sneg pokriva gore.", "example_en": "Snow covers the mountains."},
         {"sl": "morje", "en": "sea", "gender": "n", "phonetic": "MOR-yeh", "example": "Morje je danes mirno.", "example_en": "The sea is calm today."},
-        {"sl": "kri", "en": "blood", "gender": "f", "phonetic": "kree", "example": "Kri je rdeča.", "example_en": "Blood is red."},
+        {"sl": "žila", "en": "vein", "gender": "f", "phonetic": "ZHEE-lah", "example": "Žila je vidna na roki.", "example_en": "The vein is visible on the arm."},
         {"sl": "ogenj", "en": "fire", "gender": "m", "phonetic": "OH-gehn-y", "example": "Ogenj gori v kaminu.", "example_en": "Fire burns in the fireplace."},
         {"sl": "noč", "en": "night", "gender": "f", "phonetic": "nohch", "example": "Noč je temna in tiha.", "example_en": "The night is dark and quiet."},
         {"sl": "oblak", "en": "cloud", "gender": "m", "phonetic": "OH-blahk", "example": "Bel oblak plava po nebu.", "example_en": "A white cloud floats in the sky."},
@@ -824,7 +824,7 @@
         {"sl": "meča", "en": "calf (leg)", "gender": "f", "phonetic": "MEH-chah", "example": "Meča je napeta.", "example_en": "The calf is tense."},
         {"sl": "prsti", "en": "toes", "gender": "m", "phonetic": "PURS-tee", "example": "Prsti na nogah so zmrznjeni.", "example_en": "My toes are frozen."},
         {"sl": "peta", "en": "heel", "gender": "f", "phonetic": "PEH-tah", "example": "Peta me boli od hoje.", "example_en": "My heel hurts from walking."},
-        {"sl": "bok", "en": "hip", "gender": "m", "phonetic": "bohk", "example": "Bok me boli.", "example_en": "My hip hurts."},
+        {"sl": "kolk", "en": "hip", "gender": "m", "phonetic": "kohlk", "example": "Kolk me boli.", "example_en": "My hip hurts."},
         {"sl": "zadnjica", "en": "buttocks", "gender": "f", "phonetic": "zahd-NYEE-tsah", "example": "Zadnjica me boli od sedenja.", "example_en": "My buttocks hurt from sitting."}
       ],
       "sentences": [
@@ -944,7 +944,7 @@
         {"sl": "čevlji", "en": "shoes", "gender": "m", "phonetic": "CHEHV-lyee", "example": "Novi čevlji so udobni.", "example_en": "New shoes are comfortable."},
         {"sl": "nogavice", "en": "socks", "gender": "f", "phonetic": "noh-GAH-vee-tseh", "example": "Nogavice so v predalu.", "example_en": "The socks are in the drawer."},
         {"sl": "pas", "en": "belt", "gender": "m", "phonetic": "pahs", "example": "Potrebujem pas za hlače.", "example_en": "I need a belt for my pants."},
-        {"sl": "ura", "en": "watch / clock", "gender": "f", "phonetic": "OO-rah", "example": "Ura kaže dvanajst.", "example_en": "The clock shows twelve."},
+        {"sl": "budilka", "en": "alarm clock", "gender": "f", "phonetic": "boo-DEEL-kah", "example": "Budilka zazvoni ob sedmih.", "example_en": "The alarm clock rings at seven."},
         {"sl": "očala", "en": "glasses", "gender": "n", "phonetic": "oh-CHAH-lah", "example": "Brez očal ne vidim dobro.", "example_en": "Without glasses I don't see well."},
         {"sl": "torbica", "en": "handbag / purse", "gender": "f", "phonetic": "TOR-bee-tsah", "example": "Ključi so v torbici.", "example_en": "The keys are in the purse."},
         {"sl": "nahrbtnik", "en": "backpack", "gender": "m", "phonetic": "nah-HURBT-neek", "example": "Nahrbtnik je poln knjig.", "example_en": "The backpack is full of books."},
@@ -954,7 +954,7 @@
       ],
       "sentences": [
         {"sl": "Obleci čevlje in nogavice.", "en": "Put on shoes and socks.", "difficulty": 1, "vocab_ids": ["čevlji", "nogavice"]},
-        {"sl": "Ura je na zapestju, očala na nosu.", "en": "The watch is on the wrist, glasses on the nose.", "difficulty": 1, "vocab_ids": ["ura", "očala"]},
+        {"sl": "Budilka zazvoni vsako jutro, očala pa so na nosu.", "en": "The alarm clock rings every morning, glasses are on the nose.", "difficulty": 1, "vocab_ids": ["budilka", "očala"]},
         {"sl": "Denarnica je v torbici ali nahrbtniku.", "en": "The wallet is in the purse or backpack.", "difficulty": 1, "vocab_ids": ["denarnica", "torbica", "nahrbtnik"]},
         {"sl": "Prstan in ogrlica sta lep darilo.", "en": "A ring and necklace are a nice gift.", "difficulty": 2, "vocab_ids": ["prstan", "ogrlica"]}
       ]
@@ -977,14 +977,14 @@
         {"sl": "šivati", "en": "to sew", "gender": null, "phonetic": "SHEE-vah-tee", "example": "Babica zna šivati.", "example_en": "Grandmother knows how to sew."},
         {"sl": "moda", "en": "fashion", "gender": "f", "phonetic": "MOH-dah", "example": "Moda se spreminja.", "example_en": "Fashion changes."},
         {"sl": "velikost", "en": "size", "gender": "f", "phonetic": "VEH-lee-kohst", "example": "Katera velikost ste?", "example_en": "What size are you?"},
-        {"sl": "barva", "en": "color", "gender": "f", "phonetic": "BAR-vah", "example": "Katera barva vam je všeč?", "example_en": "Which color do you like?"},
+        {"sl": "odtenek", "en": "shade / tone", "gender": "m", "phonetic": "ohd-TEH-nehk", "example": "Ta odtenek modre je čudovit.", "example_en": "This shade of blue is wonderful."},
         {"sl": "vzorec", "en": "pattern", "gender": "m", "phonetic": "VZOH-rehts", "example": "Lep vzorec na blagu.", "example_en": "A nice pattern on the fabric."}
       ],
       "sentences": [
         {"sl": "Rada nosim oblačila z lepimi vzorci.", "en": "I like to wear clothes with nice patterns.", "difficulty": 1, "vocab_ids": ["nositi", "vzorec"]},
         {"sl": "Obleči se toplo in sleči mokro jakno.", "en": "Dress warmly and take off the wet jacket.", "difficulty": 2, "vocab_ids": ["obleči", "sleči"]},
         {"sl": "Moram prati in likati srajco.", "en": "I need to wash and iron the shirt.", "difficulty": 1, "vocab_ids": ["prati", "likati"]},
-        {"sl": "Katera velikost in barva, prosim?", "en": "What size and color, please?", "difficulty": 1, "vocab_ids": ["velikost", "barva"]},
+        {"sl": "Katera velikost in odtenek, prosim?", "en": "What size and shade, please?", "difficulty": 1, "vocab_ids": ["velikost", "odtenek"]},
         {"sl": "Moda se spreminja, babica pa še vedno šiva.", "en": "Fashion changes, but grandmother still sews.", "difficulty": 2, "vocab_ids": ["moda", "šivati"]}
       ]
     },
@@ -1099,7 +1099,7 @@
         {"sl": "čistiti", "en": "to clean", "gender": null, "phonetic": "CHEES-tee-tee", "example": "Čistim hišo ob sobotah.", "example_en": "I clean the house on Saturdays."},
         {"sl": "pometati", "en": "to sweep", "gender": null, "phonetic": "poh-MEH-tah-tee", "example": "Pometam tla v kuhinji.", "example_en": "I sweep the floor in the kitchen."},
         {"sl": "sesati", "en": "to vacuum", "gender": null, "phonetic": "SEH-sah-tee", "example": "Sesam preprogo v dnevni sobi.", "example_en": "I vacuum the carpet in the living room."},
-        {"sl": "kuhati", "en": "to cook", "gender": null, "phonetic": "KOO-hah-tee", "example": "Kuham večerjo za družino.", "example_en": "I'm cooking dinner for the family."},
+        {"sl": "pražiti", "en": "to fry", "gender": null, "phonetic": "PRAH-zhee-tee", "example": "Pražim čebulo na maslu.", "example_en": "I'm frying onions in butter."},
         {"sl": "pomivati", "en": "to wash dishes", "gender": null, "phonetic": "poh-MEE-vah-tee", "example": "Pomivam posodo.", "example_en": "I'm washing the dishes."},
         {"sl": "pospravljati", "en": "to tidy up", "gender": null, "phonetic": "pohs-PRAHV-lyah-tee", "example": "Pospravljam otroško sobo.", "example_en": "I'm tidying up the children's room."},
         {"sl": "popraviti", "en": "to fix / repair", "gender": null, "phonetic": "poh-PRAH-vee-tee", "example": "Moram popraviti vrata.", "example_en": "I need to fix the door."},
@@ -1109,7 +1109,7 @@
       ],
       "sentences": [
         {"sl": "Ob sobotah čistim, pometam in sesam.", "en": "On Saturdays I clean, sweep, and vacuum.", "difficulty": 1, "vocab_ids": ["čistiti", "pometati", "sesati"]},
-        {"sl": "Po kuhanju pomivam posodo.", "en": "After cooking I wash the dishes.", "difficulty": 1, "vocab_ids": ["kuhati", "pomivati"]},
+        {"sl": "Po praženju pomivam posodo.", "en": "After frying I wash the dishes.", "difficulty": 1, "vocab_ids": ["pražiti", "pomivati"]},
         {"sl": "Pospravljam sobo in barvam steno.", "en": "I'm tidying up the room and painting the wall.", "difficulty": 2, "vocab_ids": ["pospravljati", "barvati"]},
         {"sl": "Selimo se, gradijo nam novo hišo.", "en": "We're moving, they're building us a new house.", "difficulty": 2, "vocab_ids": ["seliti", "graditi"]},
         {"sl": "Moram popraviti vrata in okno.", "en": "I need to fix the door and window.", "difficulty": 1, "vocab_ids": ["popraviti"]}
