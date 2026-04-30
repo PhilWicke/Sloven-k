@@ -226,6 +226,8 @@ input[type=text]::placeholder { color:var(--text-4); }
   <div class="spacer"></div>
   <button class="btn btn-primary" onclick="continueLesson()">Continue Learning</button>
   <button class="btn btn-ghost" onclick="showScreen('lessons')">All Lessons</button>
+  <div class="gap-sm"></div>
+  <button class="btn btn-ghost btn-sm" id="mute-btn" style="width:100%;font-size:13px" onclick="toggleMute()"></button>
   <div class="gap"></div>
 </div>
 
@@ -289,6 +291,7 @@ input[type=text]::placeholder { color:var(--text-4); }
 // ===== STATE =====
 let curriculum = null, progress = null;
 let currentUnitId = '', exercises = [], exIdx = 0, score = 0;
+let muteMode = localStorage.getItem('slovencek_mute') === 'true';
 
 // ===== PERSISTENCE =====
 function loadProgress() {
@@ -328,6 +331,12 @@ function renderHome() {
   document.getElementById('stat-lessons').textContent = lc;
   document.getElementById('stat-learned').textContent = ws.filter(w => w.box >= 5).length;
   document.getElementById('stat-reviewing').textContent = ws.filter(w => w.box > 1 && w.box < 5).length;
+  document.getElementById('mute-btn').textContent = muteMode ? '🔇 Audio off — tap to enable' : '🔊 Audio on — tap to mute';
+}
+function toggleMute() {
+  muteMode = !muteMode;
+  localStorage.setItem('slovencek_mute', muteMode);
+  document.getElementById('mute-btn').textContent = muteMode ? '🔇 Audio off — tap to enable' : '🔊 Audio on — tap to mute';
 }
 
 function continueLesson() {
@@ -383,7 +392,7 @@ function renderLessons() {
 
 // ===== AUDIO =====
 function speak(text) {
-  if (!window.speechSynthesis) return;
+  if (muteMode || !window.speechSynthesis) return;
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = 'sl-SI'; u.rate = 0.8;
@@ -447,9 +456,13 @@ function buildSession(unitId) {
   }
 
   // Phase 2: Recognition (MC, listening, fill-blank)
-  const easyTypes = ['multiple_choice','mc_reverse','fill_blank','listening'];
+  let easyTypes = ['multiple_choice','mc_reverse','fill_blank','listening'];
   // Phase 3: Production (typing, dictation, context cloze, sentence building)
-  const hardTypes = ['typing','reverse_typing','dictation','context_cloze','sentence_building'];
+  let hardTypes = ['typing','reverse_typing','dictation','context_cloze','sentence_building'];
+  if (muteMode) {
+    easyTypes = easyTypes.filter(t => t !== 'listening');
+    hardTypes = hardTypes.filter(t => t !== 'dictation');
+  }
 
   const half = Math.ceil(vocab.length / 2);
   const firstHalf = shuffle([...vocab]).slice(0, half);
@@ -489,7 +502,8 @@ function buildReview(unit) {
   let sel = seen.slice(0,10).map(s=>s.item);
   if (sel.length<10) sel=sel.concat(scored.filter(s=>!progress.words[s.item.sl]).map(s=>s.item).slice(0,10-sel.length));
 
-  const types=['multiple_choice','mc_reverse','fill_blank','typing','reverse_typing','listening','dictation','context_cloze'];
+  let types=['multiple_choice','mc_reverse','fill_blank','typing','reverse_typing','listening','dictation','context_cloze'];
+  if (muteMode) types = types.filter(t => t !== 'listening' && t !== 'dictation');
   let lastType='', exs=[];
   for (const item of sel) {
     let avail=types.filter(t=>t!==lastType);
